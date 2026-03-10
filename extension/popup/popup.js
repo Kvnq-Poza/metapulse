@@ -35,6 +35,8 @@ async function runSnapshotAudit() {
 
     document.getElementById("scoreBadge").textContent = score;
     document.getElementById("scoreBadge").style.background = color;
+    // Ensure white text contrast for green/red/orange badges
+    document.getElementById("scoreBadge").style.color = "white";
     document.getElementById("scoreGrade").textContent = gradeText;
     document.getElementById("scoreGrade").style.color = color;
   }
