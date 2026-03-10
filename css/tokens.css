@@ -1,36 +1,35 @@
 /* ─────────────────────────────────────────────
    METAPULSE — DESIGN TOKENS
-   No purple. Ever. Warm editorial × industrial.
    ───────────────────────────────────────────── */
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap");
 
 :root {
   /* ── Palette ── */
-  --ink:        #0F0E0B;
-  --ink-soft:   #2A2820;
-  --ink-muted:  #6B6860;
-  --ink-faint:  #A8A69E;
-  --paper:      #F5F2EB;
-  --paper-warm: #EDE8DC;
-  --paper-cool: #FAFAF7;
-  --rule:       #D8D4CA;
+  --ink: #0f0e0b;
+  --ink-soft: #2a2820;
+  --ink-muted: #6b6860;
+  --ink-faint: #a8a69e;
+  --paper: #f5f2eb;
+  --paper-warm: #ede8dc;
+  --paper-cool: #fafaf7;
+  --rule: #d8d4ca;
 
-  --accent:       #C8F000;   /* chartreuse — the one bright note */
-  --accent-dark:  #9AB800;
-  --accent-dim:   rgba(200,240,0,0.15);
+  --accent: #c8f000; /* chartreuse — the one bright note */
+  --accent-dark: #9ab800;
+  --accent-dim: rgba(200, 240, 0, 0.15);
 
-  --ok:       #2D9E5F;
-  --ok-dim:   rgba(45,158,95,0.12);
-  --warn:     #D97706;
-  --warn-dim: rgba(217,119,6,0.12);
-  --err:      #C0392B;
-  --err-dim:  rgba(192,57,43,0.12);
+  --ok: #2d9e5f;
+  --ok-dim: rgba(45, 158, 95, 0.12);
+  --warn: #d97706;
+  --warn-dim: rgba(217, 119, 6, 0.12);
+  --err: #c0392b;
+  --err-dim: rgba(192, 57, 43, 0.12);
 
   /* ── Typography ── */
-  --font-display: 'Bebas Neue', sans-serif;
-  --font-body:    'Lora', Georgia, serif;
-  --font-mono:    'JetBrains Mono', 'Courier New', monospace;
+  --font-display: "Bebas Neue", sans-serif;
+  --font-body: "Lora", Georgia, serif;
+  --font-mono: "JetBrains Mono", "Courier New", monospace;
 
   /* ── Spacing ── */
   --gap-xs: 4px;
@@ -45,9 +44,9 @@
   --radius-lg: 16px;
 
   /* ── Shadows ── */
-  --shadow-sm: 0 1px 4px rgba(15,14,11,0.08);
-  --shadow-md: 0 4px 20px rgba(15,14,11,0.12);
-  --shadow-lg: 0 12px 48px rgba(15,14,11,0.18);
+  --shadow-sm: 0 1px 4px rgba(15, 14, 11, 0.08);
+  --shadow-md: 0 4px 20px rgba(15, 14, 11, 0.12);
+  --shadow-lg: 0 12px 48px rgba(15, 14, 11, 0.18);
 
   /* ── Transitions ── */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);

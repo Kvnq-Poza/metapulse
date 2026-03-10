@@ -5,17 +5,20 @@
 .docs-layout {
   display: grid;
   grid-template-columns: 260px 1fr;
-  min-height: calc(100vh - 54px);
+  min-height: calc(100vh - 64px);
   align-items: start;
+  position: relative;
 }
 
 .docs-nav {
   border-right: 2px solid var(--ink);
   position: sticky;
-  top: 54px;
-  max-height: calc(100vh - 54px);
+  top: 64px;
+  max-height: calc(100vh - 64px);
   overflow-y: auto;
-  padding: 24px 0;
+  padding: 32px 0;
+  background: var(--paper);
+  z-index: 10;
 }
 
 .docs-nav-section {
@@ -43,8 +46,15 @@
   border-right: 2px solid transparent;
 }
 
-.docs-nav-link:hover { color: var(--ink); background: var(--paper-warm); }
-.docs-nav-link.active { color: var(--ink); border-right-color: var(--ink); background: var(--paper-warm); }
+.docs-nav-link:hover {
+  color: var(--ink);
+  background: var(--paper-warm);
+}
+.docs-nav-link.active {
+  color: var(--ink);
+  border-right-color: var(--ink);
+  background: var(--paper-warm);
+}
 
 /* ── Docs content ── */
 .docs-content {
@@ -69,7 +79,7 @@
 }
 
 .chapter-kicker::after {
-  content: '';
+  content: "";
   flex: 1;
   max-width: 40px;
   height: 1px;
@@ -101,7 +111,9 @@
   line-height: 1.85;
 }
 
-.docs-body p { margin-bottom: 16px; }
+.docs-body p {
+  margin-bottom: 16px;
+}
 .docs-body h3 {
   font-family: var(--font-display);
   font-size: 1.3rem;
@@ -128,17 +140,27 @@
   color: var(--ink);
 }
 
-.docs-body ul, .docs-body ol {
+.docs-body ul,
+.docs-body ol {
   padding-left: 24px;
   margin-bottom: 16px;
 }
 
-.docs-body li { margin-bottom: 6px; }
+.docs-body li {
+  margin-bottom: 6px;
+}
 
-.docs-body strong { color: var(--ink); }
+.docs-body strong {
+  color: var(--ink);
+}
 
-.docs-body a { color: var(--ok); text-underline-offset: 2px; }
-.docs-body a:hover { text-decoration: underline; }
+.docs-body a {
+  color: var(--ok);
+  text-underline-offset: 2px;
+}
+.docs-body a:hover {
+  text-decoration: underline;
+}
 
 /* ── Rules table ── */
 .rules-table {
@@ -166,9 +188,14 @@
   vertical-align: top;
 }
 
-.rules-table tr:hover td { background: var(--paper-warm); }
+.rules-table tr:hover td {
+  background: var(--paper-warm);
+}
 
-.rules-table td:first-child { color: var(--ink); font-weight: 500; }
+.rules-table td:first-child {
+  color: var(--ink);
+  font-weight: 500;
+}
 
 /* ── Callout boxes ── */
 .callout {
@@ -181,9 +208,21 @@
   line-height: 1.6;
 }
 
-.callout-tip   { border-color: var(--ok);   background: var(--ok-dim);   color: var(--ok); }
-.callout-warn  { border-color: var(--warn); background: var(--warn-dim); color: var(--warn); }
-.callout-info  { border-color: var(--rule); background: var(--paper-warm); color: var(--ink-muted); }
+.callout-tip {
+  border-color: var(--ok);
+  background: var(--ok-dim);
+  color: var(--ok);
+}
+.callout-warn {
+  border-color: var(--warn);
+  background: var(--warn-dim);
+  color: var(--warn);
+}
+.callout-info {
+  border-color: var(--rule);
+  background: var(--paper-warm);
+  color: var(--ink-muted);
+}
 
 .callout-label {
   font-weight: 700;
@@ -194,8 +233,156 @@
   margin-bottom: 6px;
 }
 
+/* ── Docs TOC toggle (mobile) ── */
+.docs-toc-toggle {
+  display: none;
+  width: 100%;
+  padding: 12px 20px;
+  background: var(--paper-warm);
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  cursor: pointer;
+  text-align: left;
+  display: none; /* hidden by default; shown at ≤900px */
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.15s;
+}
+
+.docs-toc-toggle:hover {
+  background: var(--rule);
+}
+
+.docs-toc-toggle-icon {
+  font-size: 0.65rem;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.docs-toc-toggle.open .docs-toc-toggle-icon {
+  transform: rotate(180deg);
+}
+
+/* ── Table wrapper for overflow ── */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Prevent any child from busting out of docs-content ── */
+.docs-content {
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.docs-content .code-block,
+.docs-content pre {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
 @media (max-width: 900px) {
-  .docs-layout { grid-template-columns: 1fr; }
-  .docs-nav { position: static; border-right: none; border-bottom: 1px solid var(--rule); max-height: none; padding: 12px 0; }
-  .docs-content { padding: 32px 24px; }
+  /* Stack sidebar above content */
+  .docs-layout {
+    grid-template-columns: 1fr;
+    min-height: unset;
+  }
+
+  /* TOC toggle becomes a full-width button */
+  .docs-toc-toggle {
+    display: flex;
+    order: -1;
+    position: sticky;
+    top: 64px;
+    z-index: 100;
+  }
+
+  /* Sidebar: hidden by default, revealed via toggle */
+  .docs-nav {
+    position: fixed;
+    top: 108px; /* header + toggle height */
+    left: 0;
+    width: 100%;
+    height: auto;
+    max-height: calc(100vh - 108px);
+    overflow-y: auto;
+    border-right: none;
+    border-bottom: 2px solid var(--ink);
+    padding: 0;
+    display: none;
+    background: var(--paper);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .docs-nav.open {
+    display: block;
+    padding: 12px 0;
+  }
+
+  /* The layout needs the toggle above the nav */
+  .docs-layout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Bump docs content padding down */
+  .docs-content {
+    padding: 28px 20px;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Chapter titles scale down */
+  .chapter-title {
+    font-size: clamp(1.6rem, 6vw, 2.4rem);
+  }
+
+  /* Rules table: compact + horizontal scroll */
+  .rules-table {
+    font-size: 0.62rem;
+    min-width: 480px; /* let it scroll if needed */
+  }
+
+  .rules-table th,
+  .rules-table td {
+    padding: 6px 10px;
+  }
+
+  /* Wrap table in overflow container */
+  .table-wrap {
+    margin: 24px 0;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-sm);
+  }
+
+  /* Callouts readable on small screens */
+  .callout {
+    font-size: 0.73rem;
+    padding: 12px 14px;
+  }
+
+  /* Code blocks scroll horizontally */
+  .code-block {
+    font-size: 0.72rem;
+    padding: 16px;
+    white-space: pre;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius-sm);
+  }
+
+  .docs-body h3 {
+    font-size: 1.15rem;
+  }
+
+  .chapter-lead {
+    font-size: 0.95rem;
+  }
 }

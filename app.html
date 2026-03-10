@@ -10,35 +10,67 @@
   </head>
   <body>
     <!-- NAV -->
-    <nav class="site-nav">
-      <a href="index.html" class="nav-brand">
-        <div class="nav-brand-mark">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <circle cx="7" cy="7" r="5" stroke="#C8F000" stroke-width="1.5" />
-            <path
-              d="M4 7h6M7 4v6"
-              stroke="#C8F000"
-              stroke-width="1.5"
+    <header class="main-header">
+      <div class="header-container">
+        <a href="index.html" class="brand">
+          <div class="brand-logo">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
               stroke-linecap="round"
-            />
-          </svg>
+              stroke-linejoin="round"
+            >
+              <path d="M12 2v20M2 12h20" />
+              <circle cx="12" cy="12" r="10" />
+            </svg>
+          </div>
+          <span class="brand-name">MetaPulse</span>
+        </a>
+
+        <nav class="nav-menu" id="navMenu">
+          <ul class="nav-list">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="app.html" class="nav-link active">Auditor</a></li>
+            <li><a href="docs.html" class="nav-link">Docs</a></li>
+            <li>
+              <a
+                href="https://github.com/kvnqpoza/metapulse"
+                class="nav-link github-link"
+                target="_blank"
+                rel="noopener"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                  />
+                </svg>
+                <span>GitHub</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <a href="docs.html" class="btn-launch secondary">How it works</a>
+          <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+            <span class="hamburger"></span>
+          </button>
         </div>
-        MetaPulse
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="app.html" class="active">Auditor</a></li>
-        <li><a href="docs.html">Docs</a></li>
-      </ul>
-      <div class="nav-end">
-        <a
-          href="docs.html"
-          class="nav-cta"
-          style="color: var(--paper); background: var(--ink-soft)"
-          >How it works</a
-        >
       </div>
-    </nav>
+    </header>
 
     <!-- ═══════════════════════════════════════════
      APP LAYOUT
@@ -50,23 +82,6 @@
         <div class="sidebar-section">
           <div class="sidebar-label">Input</div>
 
-          <div class="input-tabs">
-            <button
-              class="input-tab active"
-              data-tab="html"
-              onclick="switchInputTab('html')"
-            >
-              HTML Snippet
-            </button>
-            <button
-              class="input-tab"
-              data-tab="url"
-              onclick="switchInputTab('url')"
-            >
-              URL
-            </button>
-          </div>
-
           <div id="htmlWrap">
             <textarea
               class="html-textarea"
@@ -77,36 +92,6 @@ Pro tip: In your browser, go to the page you want to audit, then press Cmd+U (Ma
             ></textarea>
             <div class="input-hint">
               Paste full HTML or just the &lt;head&gt;. Either works.
-            </div>
-          </div>
-
-          <div id="urlWrap" style="display: none">
-            <div class="url-input-wrap">
-              <input
-                class="url-input"
-                id="urlInput"
-                type="url"
-                placeholder="https://yoursite.com/page"
-              />
-              <span class="url-input-icon">
-                <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-                  <path
-                    d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1z"
-                    stroke="currentColor"
-                    stroke-width="1.4"
-                  />
-                  <path
-                    d="M1 8h14M8 1c-2 2.5-3 5-3 7s1 4.5 3 7M8 1c2 2.5 3 5 3 7s-1 4.5-3 7"
-                    stroke="currentColor"
-                    stroke-width="1.4"
-                    stroke-linecap="round"
-                  />
-                </svg>
-              </span>
-            </div>
-            <div class="input-hint" style="margin-top: 6px">
-              Note: many sites block cross-origin fetches. If that happens,
-              MetaPulse will say so and switch you to HTML mode.
             </div>
           </div>
 
@@ -502,21 +487,23 @@ Pro tip: In your browser, go to the page you want to audit, then press Cmd+U (Ma
     <!-- ═══════════════════════════════════════════
      TOAST
 ══════════════════════════════════════════════ -->
-    <div class="toast" id="toast">
-      <span class="toast-icon">✓</span>
-      <span class="toast-msg">Done</span>
-    </div>
-
+    <footer class="site-footer">
+      <span
+        >MetaPulse · Open Source ·
+        <a
+          href="https://js.org"
+          style="color: var(--ink-muted); text-decoration: none"
+          >Part of the JS.ORG ecosystem</a
+        ></span
+      >
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="app.html" class="active">Auditor</a>
+        <a href="docs.html">Docs</a>
+        <a href="https://github.com">GitHub</a>
+      </div>
+    </footer>
+    <script src="js/nav.js"></script>
     <script type="module" src="js/app.js"></script>
-    <script>
-      // switchInputTab and switchPreviewTab are called from inline onclick handlers.
-      // app.js (module) exposes them on window. We just ensure initial tab state
-      // matches the HTML default before the module fully loads.
-      document.addEventListener("DOMContentLoaded", () => {
-        // Ensure URL wrap is hidden by default (HTML is active)
-        const urlWrap = document.getElementById("urlWrap");
-        if (urlWrap) urlWrap.style.display = "none";
-      });
-    </script>
   </body>
 </html>
