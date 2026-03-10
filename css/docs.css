@@ -1,0 +1,201 @@
+/* ─────────────────────────────────────────────
+   METAPULSE — DOCS PAGE STYLES
+   ───────────────────────────────────────────── */
+
+.docs-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: calc(100vh - 54px);
+  align-items: start;
+}
+
+.docs-nav {
+  border-right: 2px solid var(--ink);
+  position: sticky;
+  top: 54px;
+  max-height: calc(100vh - 54px);
+  overflow-y: auto;
+  padding: 24px 0;
+}
+
+.docs-nav-section {
+  margin-bottom: 24px;
+}
+
+.docs-nav-heading {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding: 0 20px;
+  margin-bottom: 8px;
+}
+
+.docs-nav-link {
+  display: block;
+  padding: 7px 20px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+  text-decoration: none;
+  transition: all 0.12s;
+  border-right: 2px solid transparent;
+}
+
+.docs-nav-link:hover { color: var(--ink); background: var(--paper-warm); }
+.docs-nav-link.active { color: var(--ink); border-right-color: var(--ink); background: var(--paper-warm); }
+
+/* ── Docs content ── */
+.docs-content {
+  padding: 60px;
+  max-width: 780px;
+}
+
+.docs-chapter {
+  margin-bottom: 80px;
+}
+
+.chapter-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.chapter-kicker::after {
+  content: '';
+  flex: 1;
+  max-width: 40px;
+  height: 1px;
+  background: var(--rule);
+}
+
+.chapter-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  margin-bottom: 20px;
+  color: var(--ink);
+}
+
+.chapter-lead {
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--ink-muted);
+  line-height: 1.75;
+  margin-bottom: 28px;
+  border-left: 3px solid var(--accent);
+  padding-left: 16px;
+}
+
+.docs-body {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  line-height: 1.85;
+}
+
+.docs-body p { margin-bottom: 16px; }
+.docs-body h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 0.04em;
+  margin: 32px 0 12px;
+  color: var(--ink);
+}
+.docs-body h4 {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 24px 0 8px;
+}
+
+.docs-body code {
+  background: var(--paper-warm);
+  border: 1px solid var(--rule);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  color: var(--ink);
+}
+
+.docs-body ul, .docs-body ol {
+  padding-left: 24px;
+  margin-bottom: 16px;
+}
+
+.docs-body li { margin-bottom: 6px; }
+
+.docs-body strong { color: var(--ink); }
+
+.docs-body a { color: var(--ok); text-underline-offset: 2px; }
+.docs-body a:hover { text-decoration: underline; }
+
+/* ── Rules table ── */
+.rules-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.rules-table th {
+  background: var(--ink);
+  color: var(--accent);
+  text-align: left;
+  padding: 8px 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.65rem;
+}
+
+.rules-table td {
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-soft);
+  vertical-align: top;
+}
+
+.rules-table tr:hover td { background: var(--paper-warm); }
+
+.rules-table td:first-child { color: var(--ink); font-weight: 500; }
+
+/* ── Callout boxes ── */
+.callout {
+  border: 1px solid;
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  margin: 20px 0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.callout-tip   { border-color: var(--ok);   background: var(--ok-dim);   color: var(--ok); }
+.callout-warn  { border-color: var(--warn); background: var(--warn-dim); color: var(--warn); }
+.callout-info  { border-color: var(--rule); background: var(--paper-warm); color: var(--ink-muted); }
+
+.callout-label {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  display: block;
+  margin-bottom: 6px;
+}
+
+@media (max-width: 900px) {
+  .docs-layout { grid-template-columns: 1fr; }
+  .docs-nav { position: static; border-right: none; border-bottom: 1px solid var(--rule); max-height: none; padding: 12px 0; }
+  .docs-content { padding: 32px 24px; }
+}

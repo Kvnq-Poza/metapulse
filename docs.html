@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation — MetaPulse</title>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/docs.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-brand-mark">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <circle cx="7" cy="7" r="5" stroke="#C8F000" stroke-width="1.5"/>
+        <path d="M4 7h6M7 4v6" stroke="#C8F000" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    MetaPulse
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="app.html">Auditor</a></li>
+    <li><a href="docs.html" class="active">Docs</a></li>
+  </ul>
+  <div class="nav-end">
+    <a href="app.html" class="nav-cta">Launch Tool →</a>
+  </div>
+</nav>
+
+<div class="docs-layout">
+
+  <!-- ─── DOCS NAV ─── -->
+  <nav class="docs-nav">
+    <div class="docs-nav-section">
+      <div class="docs-nav-heading">Getting Started</div>
+      <a href="#intro"    class="docs-nav-link active">Introduction</a>
+      <a href="#quickstart" class="docs-nav-link">Quick Start</a>
+      <a href="#privacy"  class="docs-nav-link">Privacy</a>
+    </div>
+    <div class="docs-nav-section">
+      <div class="docs-nav-heading">The Audit Engine</div>
+      <a href="#basic"    class="docs-nav-link">Basic Meta Tags</a>
+      <a href="#og"       class="docs-nav-link">Open Graph</a>
+      <a href="#twitter"  class="docs-nav-link">Twitter Cards</a>
+      <a href="#scoring"  class="docs-nav-link">Scoring System</a>
+    </div>
+    <div class="docs-nav-section">
+      <div class="docs-nav-heading">Platform Previews</div>
+      <a href="#prev-twitter"   class="docs-nav-link">Twitter / X</a>
+      <a href="#prev-slack"     class="docs-nav-link">Slack</a>
+      <a href="#prev-whatsapp"  class="docs-nav-link">WhatsApp</a>
+      <a href="#prev-google"    class="docs-nav-link">Google Search</a>
+    </div>
+    <div class="docs-nav-section">
+      <div class="docs-nav-heading">Reference</div>
+      <a href="#rules-table" class="docs-nav-link">All Rules</a>
+      <a href="#images"      class="docs-nav-link">Image Guidelines</a>
+      <a href="#code-gen"    class="docs-nav-link">Code Generator</a>
+    </div>
+  </nav>
+
+  <!-- ─── DOCS CONTENT ─── -->
+  <article class="docs-content">
+
+    <!-- ── Introduction ── -->
+    <section class="docs-chapter" id="intro">
+      <div class="chapter-kicker">01 · Introduction</div>
+      <h1 class="chapter-title">What is MetaPulse?</h1>
+      <p class="chapter-lead">
+        MetaPulse is a browser-based meta tag auditor and social preview simulator. Paste your HTML, and in under a second you'll know exactly which tags are missing, which are misconfigured, and what your link will look like when it lands in a Slack thread, a WhatsApp chat, or a tweet.
+      </p>
+      <div class="docs-body">
+        <p>
+          The premise is simple: <strong>meta tags are invisible to most developers until something goes wrong</strong>. You ship a blog post, your colleague shares it on Slack, and it comes up as a sad grey box with no image. Or the title is truncated at the worst possible character. Or Twitter shows a tiny thumbnail instead of a dramatic banner.
+        </p>
+        <p>
+          These are not mysterious failures. Every platform has documented, predictable requirements. MetaPulse codifies those requirements into an audit engine that checks 15+ tag types against platform-specific rules — not just "does the tag exist?" but "is the value appropriate for each context?"
+        </p>
+        <h3>Who it's for</h3>
+        <p>
+          <strong>Web developers</strong> who want to verify meta coverage during development, before a PR merges. <strong>SEO specialists</strong> who need a quick visual check without hunting through raw source. <strong>Content and social media teams</strong> who want to preview what a shared link will actually look like — not guess.
+        </p>
+        <div class="callout callout-info">
+          <span class="callout-label">Note</span>
+          MetaPulse is a client-side tool. Everything runs in your browser. No data is sent to any server. No accounts, no tracking, no nonsense.
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Quick Start ── -->
+    <section class="docs-chapter" id="quickstart">
+      <div class="chapter-kicker">02 · Getting Started</div>
+      <h2 class="chapter-title">Quick Start</h2>
+      <p class="chapter-lead">
+        You're three steps away from knowing exactly why your links look bad on social.
+      </p>
+      <div class="docs-body">
+        <h3>Step 1 — Get your HTML</h3>
+        <p>
+          Open the page you want to audit in your browser. Press <code>Cmd+U</code> (Mac) or <code>Ctrl+U</code> (Windows) to open View Source. Select everything (<code>Cmd+A</code>) and copy it.
+        </p>
+        <p>
+          Alternatively, if you have access to your codebase, you can paste just the <code>&lt;head&gt;</code> section — MetaPulse only needs what's in there.
+        </p>
+
+        <h3>Step 2 — Paste and audit</h3>
+        <p>
+          Head to the <a href="app.html">Auditor</a>. Make sure the <strong>HTML Snippet</strong> tab is selected. Paste your HTML into the text area, then click <strong>Audit Now</strong> (or press <code>Cmd+Enter</code> / <code>Ctrl+Enter</code>).
+        </p>
+
+        <h3>Step 3 — Read the results</h3>
+        <p>
+          The sidebar shows your <strong>SEO Health Score</strong> (0–100), a tag-by-tag breakdown, and an asset checklist. The main panel shows your previews. Switch between Twitter, Slack, WhatsApp, and Google using the tabs at the top.
+        </p>
+        <p>
+          Any tag flagged as <strong>warn</strong> or <strong>error</strong> has a <strong>Fix ↗</strong> button. Click it to see a copy-pasteable HTML snippet with an explanation of what it does and why it matters.
+        </p>
+
+        <h4>Using the URL option</h4>
+        <p>
+          You can also switch to the <strong>URL</strong> tab and enter a page URL directly. MetaPulse will attempt to fetch the page via a CORS proxy. This works for most public pages, but if the target server blocks it, MetaPulse will say so clearly and switch you to HTML mode.
+        </p>
+        <div class="callout callout-tip">
+          <span class="callout-label">Tip</span>
+          For local development, the HTML Snippet method is always more reliable. There's no CORS to worry about, and you see exactly what's in your current build, not a cached version.
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Privacy ── -->
+    <section class="docs-chapter" id="privacy">
+      <div class="chapter-kicker">03 · Privacy</div>
+      <h2 class="chapter-title">Your data stays yours.</h2>
+      <p class="chapter-lead">
+        MetaPulse is entirely client-side. The HTML you paste never leaves your browser. The audit runs locally. The previews render locally.
+      </p>
+      <div class="docs-body">
+        <p>
+          The only network requests MetaPulse makes are:
+        </p>
+        <ul>
+          <li><strong>URL fetching (optional):</strong> If you use the URL tab, the page is fetched via a public CORS proxy (<code>corsproxy.io</code>). This is an optional convenience and can be avoided entirely by pasting HTML.</li>
+          <li><strong>OG image loading:</strong> When rendering previews, your browser fetches the <code>og:image</code> URL directly. This is the same request a browser would make when visiting your page normally.</li>
+          <li><strong>Google Fonts:</strong> Typography is loaded from Google Fonts on page load.</li>
+        </ul>
+        <p>No analytics. No cookies. No fingerprinting. MetaPulse has no backend.</p>
+      </div>
+    </section>
+
+    <!-- ── Basic Meta ── -->
+    <section class="docs-chapter" id="basic">
+      <div class="chapter-kicker">04 · Audit Engine</div>
+      <h2 class="chapter-title">Basic Meta Tags</h2>
+      <p class="chapter-lead">
+        Before Open Graph existed, before Twitter Cards were a thing, there were five basic meta tags that every page should have. Surprisingly many pages still get these wrong.
+      </p>
+      <div class="docs-body">
+        <h3>&lt;title&gt;</h3>
+        <p>
+          The page title is the most fundamental signal in the whole meta tag universe. It appears in browser tabs, bookmark lists, Google's search result headlines, and as a fallback title on every social platform that hasn't found an <code>og:title</code> first.
+        </p>
+        <p>
+          <strong>Optimal length: 50–60 characters.</strong> Google displays up to roughly 600px of width, which typically fits 50–60 characters. Go beyond that and you'll see an ellipsis in search results. Shorter is fine. Much longer is a gamble.
+        </p>
+        <div class="callout callout-warn">
+          <span class="callout-label">Common mistake</span>
+          Using the same title on every page — usually the site name alone ("Acme Corp" on every single URL). Search engines see this as thin content. So does the human trying to find the right tab.
+        </div>
+
+        <h3>Meta description</h3>
+        <p>
+          The meta description is Google's official source for the search result snippet — though Google reserves the right to ignore it and pull text from the page body instead if it thinks that's more relevant to the query. Other platforms use it more faithfully.
+        </p>
+        <p>
+          <strong>Optimal length: 120–160 characters.</strong> Long enough to be informative. Short enough to not get cut off. Write it like ad copy, not a legal disclaimer.
+        </p>
+
+        <h3>Canonical URL</h3>
+        <p>
+          The <code>link rel="canonical"</code> element tells search engines which URL is the "real" version of a page. Critical when the same content is accessible at multiple URLs — with or without <code>www</code>, with or without trailing slashes, with or without query parameters. Without it, Google may split your ranking signals across all the variants.
+        </p>
+
+        <h3>Viewport meta</h3>
+        <p>
+          The viewport meta tag tells mobile browsers how to scale the page. Without it, mobile browsers typically render the page at a desktop width and then scale it down — making text tiny and interactions fiddly. Google uses mobile-friendliness as a ranking signal.
+        </p>
+        <p>The standard value: <code>width=device-width, initial-scale=1</code>. Rarely needs to be anything else.</p>
+      </div>
+    </section>
+
+    <!-- ── Open Graph ── -->
+    <section class="docs-chapter" id="og">
+      <div class="chapter-kicker">05 · Audit Engine</div>
+      <h2 class="chapter-title">Open Graph</h2>
+      <p class="chapter-lead">
+        The Open Graph protocol was invented by Facebook in 2010 and has since become the universal language of link previews. If a platform wants to show a rich link card, it almost certainly starts by reading your OG tags.
+      </p>
+      <div class="docs-body">
+        <h3>The four required tags</h3>
+        <p>
+          The Open Graph spec nominates four "basic" tags that should be present on every page:
+          <code>og:title</code>, <code>og:type</code>, <code>og:image</code>, and <code>og:url</code>.
+          MetaPulse flags <code>og:title</code>, <code>og:description</code>, and <code>og:image</code> as required because, in practice, a link preview without any of these three is broken.
+        </p>
+
+        <h4>og:title</h4>
+        <p>The link's display title on social platforms. Can (and often should) differ from the page <code>&lt;title&gt;</code>. Optimal: under 95 characters. Twitter truncates at 70 in its own title field.</p>
+
+        <h4>og:description</h4>
+        <p>The teaser text below the title. Optimal: under 200 characters. Write for humans who are deciding whether to click, not for keyword density.</p>
+
+        <h4>og:image</h4>
+        <p>
+          The preview image. This single tag has the biggest impact on click-through rates of any meta tag. Requirements:
+        </p>
+        <ul>
+          <li><strong>Must be an absolute URL</strong> (starting with <code>https://</code>). Relative URLs will not work across platforms.</li>
+          <li><strong>Recommended dimensions: 1200×630px</strong> for Open Graph. Twitter Large Image Cards prefer 1200×600px (2:1 ratio).</li>
+          <li><strong>Format:</strong> JPG, PNG, or WebP. GIF is supported by some platforms but not all. WebP is the modern choice.</li>
+          <li><strong>File size:</strong> Under 300KB is a safe target. Messaging apps (WhatsApp, iMessage) sometimes refuse to load larger images.</li>
+        </ul>
+
+        <h4>og:url</h4>
+        <p>The canonical URL for this piece of content. Platforms use this to aggregate share counts. Without it, each URL variant (with/without www, with/without trailing slash) gets its own share count.</p>
+
+        <div class="callout callout-tip">
+          <span class="callout-label">Tip</span>
+          Set <code>og:image:width</code> and <code>og:image:height</code> as well. Some platforms won't wait to load and parse the image — they'll just trust what you declare.
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Twitter Cards ── -->
+    <section class="docs-chapter" id="twitter">
+      <div class="chapter-kicker">06 · Audit Engine</div>
+      <h2 class="chapter-title">Twitter Cards</h2>
+      <p class="chapter-lead">
+        Twitter (now X) has its own set of meta tags that override OG tags within the platform. Most of them fall back to their OG equivalents if absent — but <code>twitter:card</code> doesn't. Without it, you get no card at all.
+      </p>
+      <div class="docs-body">
+        <h3>twitter:card — the non-negotiable one</h3>
+        <p>
+          The <code>twitter:card</code> tag declares which card type to render. Valid values: <code>summary</code>, <code>summary_large_image</code>, <code>app</code>, <code>player</code>. The most useful for content pages is <code>summary_large_image</code>, which renders a full-width banner image above the title and description.
+        </p>
+        <p>
+          Without this tag, Twitter/X falls back to a plain text link. No image. No card. Just a URL.
+        </p>
+
+        <h3>The rest of the Twitter tags</h3>
+        <p>
+          <code>twitter:title</code>, <code>twitter:description</code>, and <code>twitter:image</code> all fall back to their OG equivalents when absent. Setting them explicitly lets you tailor the Twitter experience — for instance, a punchier headline that works better in a 280-character context.
+        </p>
+        <p>
+          <code>twitter:site</code> takes your <code>@handle</code>. It shows up in the card as attribution. It's free branding. You should set it.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── Scoring ── -->
+    <section class="docs-chapter" id="scoring">
+      <div class="chapter-kicker">07 · Audit Engine</div>
+      <h2 class="chapter-title">The Scoring System</h2>
+      <p class="chapter-lead">
+        The Health Score is a weighted 0–100 number. It's opinionated. It's meant to be directional, not definitive — a useful signal, not an absolute truth.
+      </p>
+      <div class="docs-body">
+        <h3>How it's calculated</h3>
+        <p>Each tag is assigned a weight based on how much it matters in practice:</p>
+        <ul>
+          <li><strong>Required tags</strong> (title, description, og:title, og:description, og:image, twitter:card) — worth 12 points each</li>
+          <li><strong>Optional tags</strong> (canonical, og:url, og:type, og:site_name, twitter:*) — worth 4 points each</li>
+        </ul>
+        <p>For each tag:</p>
+        <ul>
+          <li><strong>OK</strong> → full weight</li>
+          <li><strong>Warn</strong> (present but length-exceeded or misconfigured) → 50% weight</li>
+          <li><strong>Missing</strong> (optional tag absent) → 15% weight</li>
+          <li><strong>Error</strong> (required tag absent) → 0 weight</li>
+        </ul>
+        <p>The total earned weight is divided by the total possible weight and scaled to 100.</p>
+
+        <h3>Grade thresholds</h3>
+        <table class="rules-table">
+          <thead><tr><th>Score</th><th>Grade</th><th>What it means</th></tr></thead>
+          <tbody>
+            <tr><td>90–100</td><td>EXCELLENT</td><td>Nearly perfect meta coverage. Minor optional tags may be absent.</td></tr>
+            <tr><td>75–89</td><td>GOOD</td><td>Solid. Required tags present. A few optional ones missing.</td></tr>
+            <tr><td>55–74</td><td>FAIR</td><td>Some important tags absent or configured poorly.</td></tr>
+            <tr><td>30–54</td><td>POOR</td><td>Multiple critical tags missing. Social previews will look broken.</td></tr>
+            <tr><td>0–29</td><td>CRITICAL</td><td>Bare minimum. Links on social media will be embarrassing.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── Previews ── -->
+    <section class="docs-chapter" id="prev-twitter">
+      <div class="chapter-kicker">08 · Platform Previews</div>
+      <h2 class="chapter-title">Twitter / X</h2>
+      <div class="docs-body">
+        <p>MetaPulse renders both Twitter card variants:</p>
+        <h3>Summary Card</h3>
+        <p>
+          A horizontal layout with a small square thumbnail on the left and title/description on the right. Used when <code>twitter:card</code> is <code>summary</code>. Title is capped at 70 characters; description at 125.
+        </p>
+        <h3>Large Image Card (summary_large_image)</h3>
+        <p>
+          A vertical layout with a full-width image above the metadata. The aspect ratio is roughly 2:1 (1200×600px optimal). Title capped at 70 characters. This is the card type you want for content pages — it stops thumbs mid-scroll.
+        </p>
+        <p>
+          MetaPulse loads the actual <code>og:image</code> (or <code>twitter:image</code>) URL from your HTML and displays it in the card preview. What you see is what your audience sees.
+        </p>
+      </div>
+    </section>
+
+    <section class="docs-chapter" id="prev-slack">
+      <div class="chapter-kicker">09 · Platform Previews</div>
+      <h2 class="chapter-title">Slack</h2>
+      <div class="docs-body">
+        <p>
+          Slack's link unfurl is a horizontal card with a coloured left border, site name, title, description, and a thumbnail image. MetaPulse simulates this precisely, including Slack's signature dark background and the green-accent left border.
+        </p>
+        <p>
+          Slack reads <code>og:site_name</code>, <code>og:title</code>, <code>og:description</code>, and <code>og:image</code>. The thumbnail is a 80×80px crop of the OG image. If no OG image is present, the thumbnail slot is empty.
+        </p>
+        <p>
+          Character limits are more generous in Slack than on Twitter, but the description is still cropped after roughly 180 characters in most clients.
+        </p>
+      </div>
+    </section>
+
+    <section class="docs-chapter" id="prev-whatsapp">
+      <div class="chapter-kicker">10 · Platform Previews</div>
+      <h2 class="chapter-title">WhatsApp</h2>
+      <div class="docs-body">
+        <p>
+          WhatsApp renders a dark-themed link preview inside the message bubble. Title and description are pulled from OG tags. The preview image is displayed at 16:9 ratio above the text metadata.
+        </p>
+        <p>
+          WhatsApp is stricter than most platforms: the <code>og:image</code> must be an absolute HTTPS URL, and the image file size should be under 300KB. Larger images may silently fail to load. Relative URLs are always ignored.
+        </p>
+        <p>
+          Title is capped at approximately 60 characters, description at 100. WhatsApp doesn't read <code>twitter:*</code> tags — it's exclusively OG.
+        </p>
+      </div>
+    </section>
+
+    <section class="docs-chapter" id="prev-google">
+      <div class="chapter-kicker">11 · Platform Previews</div>
+      <h2 class="chapter-title">Google Search</h2>
+      <div class="docs-body">
+        <p>
+          The Google Search preview shows your page as it might appear in a search result — breadcrumb, title, and snippet. MetaPulse offers both desktop and mobile variants.
+        </p>
+        <p>
+          Google uses the <code>&lt;title&gt;</code> tag for the result headline, capped at approximately 60 characters (Google calculates by pixel width, not character count, but 60 chars is a reliable proxy). The description meta tag is used for the snippet, but Google may substitute its own excerpt from the page body if it thinks that's more relevant to a given query.
+        </p>
+        <div class="callout callout-warn">
+          <span class="callout-label">Important</span>
+          Google's SERP snippet is an approximation. The actual display depends on the search query, device, and Google's real-time decisions. MetaPulse shows you what you've configured, not a guarantee of what Google will show.
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Rules table ── -->
+    <section class="docs-chapter" id="rules-table">
+      <div class="chapter-kicker">12 · Reference</div>
+      <h2 class="chapter-title">All Audit Rules</h2>
+      <div class="docs-body">
+        <table class="rules-table">
+          <thead>
+            <tr><th>Tag</th><th>Group</th><th>Required</th><th>Max Length</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>title</td><td>Basic</td><td>Yes</td><td>60</td><td>Primary title tag</td></tr>
+            <tr><td>description</td><td>Basic</td><td>Yes</td><td>160</td><td>Meta description</td></tr>
+            <tr><td>canonical</td><td>Basic</td><td>No</td><td>—</td><td>link rel="canonical"</td></tr>
+            <tr><td>robots</td><td>Basic</td><td>No</td><td>—</td><td>Crawl directives</td></tr>
+            <tr><td>viewport</td><td>Basic</td><td>No</td><td>—</td><td>Mobile scaling</td></tr>
+            <tr><td>og:title</td><td>Open Graph</td><td>Yes</td><td>95</td><td>Social share title</td></tr>
+            <tr><td>og:description</td><td>Open Graph</td><td>Yes</td><td>200</td><td>Social share description</td></tr>
+            <tr><td>og:image</td><td>Open Graph</td><td>Yes</td><td>—</td><td>Must be absolute HTTPS URL</td></tr>
+            <tr><td>og:url</td><td>Open Graph</td><td>No</td><td>—</td><td>Canonical URL for OG</td></tr>
+            <tr><td>og:type</td><td>Open Graph</td><td>No</td><td>—</td><td>website, article, etc.</td></tr>
+            <tr><td>og:site_name</td><td>Open Graph</td><td>No</td><td>—</td><td>Brand/site name</td></tr>
+            <tr><td>twitter:card</td><td>Twitter / X</td><td>Yes</td><td>—</td><td>summary or summary_large_image</td></tr>
+            <tr><td>twitter:title</td><td>Twitter / X</td><td>No</td><td>70</td><td>Falls back to og:title</td></tr>
+            <tr><td>twitter:description</td><td>Twitter / X</td><td>No</td><td>200</td><td>Falls back to og:description</td></tr>
+            <tr><td>twitter:image</td><td>Twitter / X</td><td>No</td><td>—</td><td>Falls back to og:image</td></tr>
+            <tr><td>twitter:site</td><td>Twitter / X</td><td>No</td><td>—</td><td>@handle attribution</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── Image Guidelines ── -->
+    <section class="docs-chapter" id="images">
+      <div class="chapter-kicker">13 · Reference</div>
+      <h2 class="chapter-title">Image Guidelines</h2>
+      <div class="docs-body">
+        <p>The og:image is the single highest-leverage meta tag you can add. Here's the spec that keeps every platform happy:</p>
+        <table class="rules-table">
+          <thead><tr><th>Platform</th><th>Dimensions</th><th>Ratio</th><th>Max Size</th><th>Format</th></tr></thead>
+          <tbody>
+            <tr><td>Open Graph (general)</td><td>1200 × 630px</td><td>1.91:1</td><td>8MB</td><td>JPG, PNG, WebP</td></tr>
+            <tr><td>Twitter Large Image</td><td>1200 × 600px</td><td>2:1</td><td>5MB</td><td>JPG, PNG, WebP</td></tr>
+            <tr><td>Twitter Summary</td><td>144 × 144px min</td><td>1:1</td><td>5MB</td><td>JPG, PNG, WebP</td></tr>
+            <tr><td>WhatsApp</td><td>1200 × 630px</td><td>1.91:1</td><td>300KB</td><td>JPG, PNG</td></tr>
+            <tr><td>Slack</td><td>80 × 80px thumb</td><td>1:1 crop</td><td>—</td><td>JPG, PNG, WebP</td></tr>
+            <tr><td>LinkedIn</td><td>1200 × 627px</td><td>1.91:1</td><td>5MB</td><td>JPG, PNG</td></tr>
+          </tbody>
+        </table>
+        <div class="callout callout-tip">
+          <span class="callout-label">Recommendation</span>
+          Create one 1200×630px image. It works acceptably everywhere. If Twitter performance matters to you, additionally create a 1200×600px variant and set it as <code>twitter:image</code>.
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Code Generator ── -->
+    <section class="docs-chapter" id="code-gen">
+      <div class="chapter-kicker">14 · Reference</div>
+      <h2 class="chapter-title">Code Generator</h2>
+      <div class="docs-body">
+        <p>
+          The <strong>Generated Code</strong> tab in the auditor produces a complete, formatted <code>&lt;head&gt;</code> snippet based on the values found in your HTML — or sensible placeholders where tags are missing. Copy it directly into your codebase.
+        </p>
+        <p>
+          The generated code includes:
+        </p>
+        <ul>
+          <li>All primary meta tags (charset, viewport, title, description, robots, canonical)</li>
+          <li>Full Open Graph block (type, title, description, image with dimensions, url, site_name)</li>
+          <li>Full Twitter Cards block (card, title, description, image, site handle)</li>
+          <li>Inline comments grouping each section and explaining where to find missing values</li>
+        </ul>
+        <p>
+          The Fix modal (opened via the <strong>Fix ↗</strong> button on any flagged tag) provides a smaller, tag-specific snippet with a contextual explanation. These are designed to be minimal, targeted patches — paste them into an existing <code>&lt;head&gt;</code> rather than replacing it wholesale.
+        </p>
+      </div>
+    </section>
+
+  </article>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer" style="border-top:2px solid var(--ink);padding:28px 60px;display:flex;align-items:center;justify-content:space-between;font-family:var(--font-mono);font-size:0.68rem;color:var(--ink-faint)">
+  <span>MetaPulse · Open Source · <a href="https://js.org" style="color:var(--ink-muted);text-decoration:none">JS.ORG</a></span>
+  <div style="display:flex;gap:24px">
+    <a href="index.html" style="color:var(--ink-muted);text-decoration:none">Home</a>
+    <a href="app.html"   style="color:var(--ink-muted);text-decoration:none">Auditor</a>
+    <a href="https://github.com" style="color:var(--ink-muted);text-decoration:none">GitHub</a>
+  </div>
+</footer>
+
+<script>
+  // Active link highlighting on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.docs-nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.docs-nav-link[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

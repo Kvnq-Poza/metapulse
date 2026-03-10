@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "MetaPulse",
+  "version": "1.0",
+  "description": "Social Previews, Perfected. Audit your meta tags and simulate social previews in real-time.",
+  "permissions": [
+    "sidePanel",
+    "activeTab",
+    "scripting",
+    "declarativeNetRequest",
+    "storage",
+    "contextMenus"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "scripts/background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "MetaPulse Health Check"
+  },
+  "side_panel": {
+    "default_path": "sidepanel/sidepanel.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["scripts/content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["js/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

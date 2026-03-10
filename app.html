@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auditor — MetaPulse</title>
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav class="site-nav">
+      <a href="index.html" class="nav-brand">
+        <div class="nav-brand-mark">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <circle cx="7" cy="7" r="5" stroke="#C8F000" stroke-width="1.5" />
+            <path
+              d="M4 7h6M7 4v6"
+              stroke="#C8F000"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+        MetaPulse
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="app.html" class="active">Auditor</a></li>
+        <li><a href="docs.html">Docs</a></li>
+      </ul>
+      <div class="nav-end">
+        <a
+          href="docs.html"
+          class="nav-cta"
+          style="color: var(--paper); background: var(--ink-soft)"
+          >How it works</a
+        >
+      </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════
+     APP LAYOUT
+══════════════════════════════════════════════ -->
+    <div class="app-layout">
+      <!-- ─── SIDEBAR ─── -->
+      <aside class="app-sidebar">
+        <!-- Input section -->
+        <div class="sidebar-section">
+          <div class="sidebar-label">Input</div>
+
+          <div class="input-tabs">
+            <button
+              class="input-tab active"
+              data-tab="html"
+              onclick="switchInputTab('html')"
+            >
+              HTML Snippet
+            </button>
+            <button
+              class="input-tab"
+              data-tab="url"
+              onclick="switchInputTab('url')"
+            >
+              URL
+            </button>
+          </div>
+
+          <div id="htmlWrap">
+            <textarea
+              class="html-textarea"
+              id="htmlInput"
+              placeholder="Paste your page HTML or &lt;head&gt; section here...
+
+Pro tip: In your browser, go to the page you want to audit, then press Cmd+U (Mac) or Ctrl+U (Windows) to view the source. Select all, copy, paste here."
+            ></textarea>
+            <div class="input-hint">
+              Paste full HTML or just the &lt;head&gt;. Either works.
+            </div>
+          </div>
+
+          <div id="urlWrap" style="display: none">
+            <div class="url-input-wrap">
+              <input
+                class="url-input"
+                id="urlInput"
+                type="url"
+                placeholder="https://yoursite.com/page"
+              />
+              <span class="url-input-icon">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                  <path
+                    d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1z"
+                    stroke="currentColor"
+                    stroke-width="1.4"
+                  />
+                  <path
+                    d="M1 8h14M8 1c-2 2.5-3 5-3 7s1 4.5 3 7M8 1c2 2.5 3 5 3 7s-1 4.5-3 7"
+                    stroke="currentColor"
+                    stroke-width="1.4"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </span>
+            </div>
+            <div class="input-hint" style="margin-top: 6px">
+              Note: many sites block cross-origin fetches. If that happens,
+              MetaPulse will say so and switch you to HTML mode.
+            </div>
+          </div>
+
+          <button class="audit-btn" id="auditBtn" onclick="runAudit()">
+            <span class="btn-text">Audit Now ⌘↵</span>
+            <span class="btn-loader"
+              ><span class="spinner"></span> Analysing…</span
+            >
+          </button>
+
+          <div style="margin-top: 10px; text-align: center">
+            <button
+              id="demoBtn"
+              style="
+                background: none;
+                border: none;
+                font-family: var(--font-mono);
+                font-size: 0.65rem;
+                color: var(--ink-faint);
+                cursor: pointer;
+                letter-spacing: 0.04em;
+                text-decoration: underline;
+                text-underline-offset: 3px;
+              "
+            >
+              or load a demo →
+            </button>
+          </div>
+        </div>
+
+        <!-- Score section (hidden until audit runs) -->
+        <div class="sidebar-section initially-hidden" style="display: none">
+          <div class="sidebar-label">Health Score</div>
+          <div class="score-section">
+            <!-- The gauge: semi-circle arc, 0% at left, 100% at right, arc over the top -->
+            <div class="gauge-wrap">
+              <svg
+                class="gauge-svg"
+                id="gaugeSvg"
+                viewBox="10 10 180 100"
+                overflow="visible"
+              >
+                <!-- track is the grey background arc -->
+                <path
+                  id="gaugeTrack"
+                  d="M 20,100 A 80,80 0 1,1 180,100"
+                  fill="none"
+                  stroke="var(--rule)"
+                  stroke-width="10"
+                  stroke-linecap="round"
+                />
+                <!-- fill animates from left to right -->
+                <path
+                  id="gaugeFill"
+                  d="M 20,100 A 80,80 0 1,1 180,100"
+                  fill="none"
+                  stroke-width="10"
+                  stroke-linecap="round"
+                  style="
+                    stroke-dasharray: 251;
+                    stroke-dashoffset: 251;
+                    transition:
+                      stroke-dashoffset 1.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+                      stroke 0.4s;
+                    stroke: var(--ok);
+                  "
+                />
+              </svg>
+              <!-- Score number sits at the bottom-centre of the arc -->
+              <div class="gauge-center">
+                <span class="gauge-score" id="gaugeScore">--</span>
+                <span class="gauge-label">out of 100</span>
+              </div>
+            </div>
+
+            <div class="gauge-ticks">
+              <span class="gauge-tick-lbl">0</span>
+              <span class="gauge-tick-lbl">100</span>
+            </div>
+
+            <div class="score-grade" id="scoreGrade">—</div>
+            <div class="score-message" id="scoreMsg">
+              Run an audit to see your score
+            </div>
+
+            <div class="score-counts">
+              <div class="score-count-pill ok-pill">
+                <span class="score-count-num" id="countOk">—</span>
+                <span class="score-count-lbl">OK</span>
+              </div>
+              <div class="score-count-pill warn-pill">
+                <span class="score-count-num" id="countWarn">—</span>
+                <span class="score-count-lbl">Warn</span>
+              </div>
+              <div class="score-count-pill err-pill">
+                <span class="score-count-num" id="countErr">—</span>
+                <span class="score-count-lbl">Error</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tag audit list -->
+        <div class="initially-hidden" id="tagListWrap" style="display: none">
+          <div
+            class="sidebar-label"
+            style="
+              padding: 10px 20px 6px;
+              background: var(--paper-warm);
+              border-bottom: 1px solid var(--rule);
+              border-top: 1px solid var(--rule);
+            "
+          >
+            Tag Audit
+          </div>
+          <div id="tagList"></div>
+        </div>
+
+        <!-- Asset checks -->
+        <div class="sidebar-section initially-hidden" style="display: none">
+          <div class="sidebar-label">Asset Checks</div>
+          <div class="asset-grid" id="assetGrid">
+            <div
+              style="
+                font-family: var(--font-mono);
+                font-size: 0.7rem;
+                color: var(--ink-faint);
+                font-style: italic;
+              "
+            >
+              Run an audit to see image and schema checks.
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ─── MAIN / PREVIEWS ─── -->
+      <main class="app-main">
+        <!-- Preview tab bar -->
+        <div class="preview-tab-bar">
+          <button
+            class="preview-tab active"
+            data-tab="twitter"
+            onclick="switchPreviewTab('twitter')"
+          >
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor">
+              <path
+                d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"
+              />
+            </svg>
+            Twitter / X
+          </button>
+          <button
+            class="preview-tab"
+            data-tab="slack"
+            onclick="switchPreviewTab('slack')"
+          >
+            <svg
+              width="13"
+              height="13"
+              viewBox="0 0 127 127"
+              fill="currentColor"
+            >
+              <path
+                d="M27.2 80c0 7.3-5.9 13.2-13.2 13.2C6.7 93.2.8 87.3.8 80c0-7.3 5.9-13.2 13.2-13.2h13.2V80zm6.6 0c0-7.3 5.9-13.2 13.2-13.2 7.3 0 13.2 5.9 13.2 13.2v33c0 7.3-5.9 13.2-13.2 13.2-7.3 0-13.2-5.9-13.2-13.2V80z"
+                fill="#E01E5A"
+              />
+              <path
+                d="M47 27c-7.3 0-13.2-5.9-13.2-13.2C33.8 6.5 39.7.6 47 .6c7.3 0 13.2 5.9 13.2 13.2V27H47zm0 6.7c7.3 0 13.2 5.9 13.2 13.2 0 7.3-5.9 13.2-13.2 13.2H13.9C6.6 60.1.7 54.2.7 46.9c0-7.3 5.9-13.2 13.2-13.2H47z"
+                fill="#36C5F0"
+              />
+              <path
+                d="M99.9 46.9c0-7.3 5.9-13.2 13.2-13.2 7.3 0 13.2 5.9 13.2 13.2 0 7.3-5.9 13.2-13.2 13.2H99.9V46.9zm-6.6 0c0 7.3-5.9 13.2-13.2 13.2-7.3 0-13.2-5.9-13.2-13.2V13.8C66.9 6.5 72.8.6 80.1.6c7.3 0 13.2 5.9 13.2 13.2v33.1z"
+                fill="#2EB67D"
+              />
+              <path
+                d="M80.1 99.8c7.3 0 13.2 5.9 13.2 13.2 0 7.3-5.9 13.2-13.2 13.2-7.3 0-13.2-5.9-13.2-13.2V99.8h13.2zm0-6.6c-7.3 0-13.2-5.9-13.2-13.2 0-7.3 5.9-13.2 13.2-13.2h33.1c7.3 0 13.2 5.9 13.2 13.2 0 7.3-5.9 13.2-13.2 13.2H80.1z"
+                fill="#ECB22E"
+              />
+            </svg>
+            Slack
+          </button>
+          <button
+            class="preview-tab"
+            data-tab="whatsapp"
+            onclick="switchPreviewTab('whatsapp')"
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#25D366">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+              />
+            </svg>
+            WhatsApp
+          </button>
+          <button
+            class="preview-tab"
+            data-tab="google"
+            onclick="switchPreviewTab('google')"
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24">
+              <path
+                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                fill="#4285F4"
+              />
+              <path
+                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                fill="#34A853"
+              />
+              <path
+                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                fill="#FBBC05"
+              />
+              <path
+                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                fill="#EA4335"
+              />
+            </svg>
+            Google
+          </button>
+          <button
+            class="preview-tab"
+            data-tab="code"
+            onclick="switchPreviewTab('code')"
+          >
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+              <path
+                d="M5 3L1 8l4 5M11 3l4 5-4 5M9 2l-2 12"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Generated Code
+          </button>
+        </div>
+
+        <!-- Twitter/X preview pane -->
+        <div class="preview-pane active" data-pane="twitter">
+          <div class="empty-state" id="emptyTwitter">
+            <div class="empty-icon">𝕏</div>
+            <div class="empty-title">Twitter / X Preview</div>
+            <div class="empty-body">
+              Paste HTML and run an audit to see both the Summary Card and Large
+              Image Card variants — complete with your actual og:image.
+            </div>
+          </div>
+          <div id="previewTwitter" style="display: none"></div>
+        </div>
+
+        <!-- Slack preview pane -->
+        <div class="preview-pane" data-pane="slack">
+          <div class="empty-state" id="emptySlack">
+            <div class="empty-icon">
+              <svg
+                width="40"
+                height="40"
+                viewBox="0 0 127 127"
+                fill="var(--ink-faint)"
+                style="opacity: 0.4"
+              >
+                <path
+                  d="M27.2 80c0 7.3-5.9 13.2-13.2 13.2C6.7 93.2.8 87.3.8 80c0-7.3 5.9-13.2 13.2-13.2h13.2V80zm6.6 0c0-7.3 5.9-13.2 13.2-13.2 7.3 0 13.2 5.9 13.2 13.2v33c0 7.3-5.9 13.2-13.2 13.2-7.3 0-13.2-5.9-13.2-13.2V80z"
+                />
+                <path
+                  d="M47 27c-7.3 0-13.2-5.9-13.2-13.2C33.8 6.5 39.7.6 47 .6c7.3 0 13.2 5.9 13.2 13.2V27H47zm0 6.7c7.3 0 13.2 5.9 13.2 13.2 0 7.3-5.9 13.2-13.2 13.2H13.9C6.6 60.1.7 54.2.7 46.9c0-7.3 5.9-13.2 13.2-13.2H47z"
+                />
+                <path
+                  d="M99.9 46.9c0-7.3 5.9-13.2 13.2-13.2 7.3 0 13.2 5.9 13.2 13.2 0 7.3-5.9 13.2-13.2 13.2H99.9V46.9zm-6.6 0c0 7.3-5.9 13.2-13.2 13.2-7.3 0-13.2-5.9-13.2-13.2V13.8C66.9 6.5 72.8.6 80.1.6c7.3 0 13.2 5.9 13.2 13.2v33.1z"
+                />
+                <path
+                  d="M80.1 99.8c7.3 0 13.2 5.9 13.2 13.2 0 7.3-5.9 13.2-13.2 13.2-7.3 0-13.2-5.9-13.2-13.2V99.8h13.2zm0-6.6c-7.3 0-13.2-5.9-13.2-13.2 0-7.3 5.9-13.2 13.2-13.2h33.1c7.3 0 13.2 5.9 13.2 13.2 0 7.3-5.9 13.2-13.2 13.2H80.1z"
+                />
+              </svg>
+            </div>
+            <div class="empty-title">Slack Preview</div>
+            <div class="empty-body">
+              See exactly how your link unfurls in a Slack channel — including
+              the site name, title, description, and thumbnail image.
+            </div>
+          </div>
+          <div id="previewSlack" style="display: none"></div>
+        </div>
+
+        <!-- WhatsApp preview pane -->
+        <div class="preview-pane" data-pane="whatsapp">
+          <div class="empty-state" id="emptyWa">
+            <div class="empty-icon">📱</div>
+            <div class="empty-title">WhatsApp Preview</div>
+            <div class="empty-body">
+              WhatsApp is strict — it requires an og:image with an absolute
+              HTTPS URL. Run an audit to see whether yours passes.
+            </div>
+          </div>
+          <div id="previewWhatsapp" style="display: none"></div>
+        </div>
+
+        <!-- Google preview pane -->
+        <div class="preview-pane" data-pane="google">
+          <div class="empty-state" id="emptyGoogle">
+            <div class="empty-icon">🔍</div>
+            <div class="empty-title">Google Search Preview</div>
+            <div class="empty-body">
+              Preview your page's title and description exactly as they'd appear
+              in desktop and mobile search results — with accurate character
+              truncation.
+            </div>
+          </div>
+          <div id="previewGoogle" style="display: none"></div>
+        </div>
+
+        <!-- Generated Code pane -->
+        <div class="preview-pane" data-pane="code">
+          <div class="empty-state" id="emptyCode">
+            <div class="empty-icon">⚡</div>
+            <div class="empty-title">Generated Code</div>
+            <div class="empty-body">
+              Run an audit to generate a complete, optimised &lt;head&gt;
+              snippet — with all tags filled from your content, properly
+              grouped, and ready to paste.
+            </div>
+          </div>
+          <div id="codeSection" style="display: none">
+            <div class="code-output-meta">
+              A complete, optimised <code>&lt;head&gt;</code> snippet assembled
+              from your audit. Missing tags are filled with sensible
+              placeholders — replace them with your real values.
+            </div>
+            <div class="code-wrap">
+              <pre
+                class="code-block"
+                id="codeOutput"
+                style="min-height: 200px"
+              ></pre>
+              <button
+                class="copy-btn"
+                id="copyFullBtn"
+                onclick="copyFullCode()"
+              >
+                Copy All
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+     FIX MODAL
+══════════════════════════════════════════════ -->
+    <div class="modal-backdrop" id="fixModal" onclick="closeFixModal(event)">
+      <div class="modal">
+        <div class="modal-header">
+          <div class="modal-title" id="modalTitle">Fix: tag</div>
+          <button
+            class="modal-close"
+            id="modalCloseBtn"
+            onclick="closeFixModal(event)"
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
+        <p class="modal-desc" id="modalDesc"></p>
+        <div class="code-wrap">
+          <pre
+            class="code-block"
+            id="modalCode"
+            style="font-size: 0.8rem; line-height: 1.8"
+          ></pre>
+          <button class="copy-btn" id="modalCopyBtn">Copy</button>
+        </div>
+        <div
+          style="
+            margin-top: 16px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+          "
+        >
+          <button
+            class="btn btn-ghost btn-sm"
+            onclick="
+              document.getElementById('fixModal').classList.remove('open')
+            "
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+     TOAST
+══════════════════════════════════════════════ -->
+    <div class="toast" id="toast">
+      <span class="toast-icon">✓</span>
+      <span class="toast-msg">Done</span>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+    <script>
+      // switchInputTab and switchPreviewTab are called from inline onclick handlers.
+      // app.js (module) exposes them on window. We just ensure initial tab state
+      // matches the HTML default before the module fully loads.
+      document.addEventListener("DOMContentLoaded", () => {
+        // Ensure URL wrap is hidden by default (HTML is active)
+        const urlWrap = document.getElementById("urlWrap");
+        if (urlWrap) urlWrap.style.display = "none";
+      });
+    </script>
+  </body>
+</html>

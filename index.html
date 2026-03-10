@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MetaPulse — Social Previews, Perfected</title>
+    <meta
+      name="description"
+      content="The developer-first tool for auditing meta tags and simulating social previews. Open Graph, Twitter Cards, Google Search, Slack, WhatsApp — all pixel-perfect."
+    />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/landing.css" />
+  </head>
+  <body>
+    <!-- ═══════════════════════════════════════════
+     NAV
+══════════════════════════════════════════════ -->
+    <nav class="site-nav">
+      <a href="index.html" class="nav-brand">
+        <div class="nav-brand-mark">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <circle cx="7" cy="7" r="5" stroke="#C8F000" stroke-width="1.5" />
+            <path
+              d="M4 7h6M7 4v6"
+              stroke="#C8F000"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+        MetaPulse
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="app.html">Auditor</a></li>
+        <li><a href="docs.html">Docs</a></li>
+      </ul>
+      <div class="nav-end">
+        <a href="app.html" class="nav-cta">Launch Tool →</a>
+      </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════
+     TICKER TAPE
+══════════════════════════════════════════════ -->
+    <div class="ticker-wrap" aria-hidden="true">
+      <div class="ticker-track">
+        <span class="ticker-item"
+          >Open Graph Auditor<span class="ticker-sep">·</span></span
+        >
+        <span class="ticker-item"
+          >Twitter Card Previews<span class="ticker-sep">·</span></span
+        >
+        <span class="ticker-item"
+          >Slack Unfurl Simulator<span class="ticker-sep">·</span></span
+        >
+        <span class="ticker-item"
+          >WhatsApp Link Preview<span class="ticker-sep">·</span></span
+        >
+        <span class="ticker-item"
+          >Google SERP Snippets<span class="ticker-sep">·</span></span
+        >
+        <span class="ticker-item"
+          >SEO Health Score<span class="ticker-sep">·</span></span
+        >
+        <span class="ticker-item"
+          >Code Generator<span class="ticker-sep">·</span></span
+        >
+        <span class="ticker-item"
+          >Image Asset Validator<span class="ticker-sep">·</span></span
+        >
+        <span class="ticker-item"
+          >Zero Dependencies<span class="ticker-sep">·</span></span
+        >
+        <span class="ticker-item"
+          >Open Graph Auditor<span class="ticker-sep">·</span></span
+        >
+        <span class="ticker-item"
+          >Twitter Card Previews<span class="ticker-sep">·</span></span
+        >
+        <span class="ticker-item"
+          >Slack Unfurl Simulator<span class="ticker-sep">·</span></span
+        >
+        <span class="ticker-item"
+          >WhatsApp Link Preview<span class="ticker-sep">·</span></span
+        >
+        <span class="ticker-item"
+          >Google SERP Snippets<span class="ticker-sep">·</span></span
+        >
+        <span class="ticker-item"
+          >SEO Health Score<span class="ticker-sep">·</span></span
+        >
+        <span class="ticker-item"
+          >Code Generator<span class="ticker-sep">·</span></span
+        >
+        <span class="ticker-item"
+          >Image Asset Validator<span class="ticker-sep">·</span></span
+        >
+        <span class="ticker-item"
+          >Zero Dependencies<span class="ticker-sep">·</span></span
+        >
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
+    <section class="hero">
+      <div class="hero-left">
+        <div>
+          <div class="hero-eyebrow">Meta tag intelligence</div>
+          <h1 class="hero-headline">
+            Social<br />
+            Previews,<br />
+            <span class="accent-line">Perfected.</span>
+          </h1>
+          <p class="hero-sub">
+            You've spent hours building something worth sharing. Don't let a
+            missing
+            <code
+              style="
+                font-family: &quot;JetBrains Mono&quot;, monospace;
+                font-size: 0.9em;
+                background: var(--paper-warm);
+                padding: 1px 5px;
+                border-radius: 3px;
+              "
+              >og:image</code
+            >
+            turn your link into a grey rectangle. MetaPulse audits every meta
+            tag, simulates how your page looks on every platform, and tells you
+            exactly what to fix — with copy-pasteable code.
+          </p>
+          <div class="hero-cta-row">
+            <a href="app.html" class="btn btn-primary btn-lg">
+              Start Auditing →
+            </a>
+            <a href="docs.html" class="btn btn-ghost btn-lg"> How it works </a>
+          </div>
+        </div>
+
+        <div class="hero-bottom">
+          <div class="hero-stat">
+            <span class="hero-stat-num">15+</span>
+            <span>tags audited</span>
+          </div>
+          <div style="width: 1px; height: 36px; background: var(--rule)"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-num">5</span>
+            <span>platforms previewed</span>
+          </div>
+          <div style="width: 1px; height: 36px; background: var(--rule)"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-num">0</span>
+            <span>dependencies</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <!-- Mock audit card visual -->
+        <div class="mock-audit">
+          <div class="mock-audit-header">
+            <div class="mock-dots">
+              <div class="mock-dot mock-dot-r"></div>
+              <div class="mock-dot mock-dot-y"></div>
+              <div class="mock-dot mock-dot-g"></div>
+            </div>
+            metapulse · auditing yoursite.com
+          </div>
+          <div class="mock-score-bar">
+            <div class="mock-score-circle">
+              <span class="mock-score-num">87</span>
+              <span class="mock-score-lbl">/100</span>
+            </div>
+            <div class="mock-score-meta">
+              <div class="mock-score-title">GOOD</div>
+              <div class="mock-score-sub">solid coverage · 2 warnings</div>
+            </div>
+          </div>
+          <div class="mock-tags">
+            <div class="mock-tag">
+              <div class="mock-tag-dot" style="background: var(--ok)"></div>
+              <span class="mock-tag-name">og:title</span>
+              <span class="mock-tag-status" style="color: var(--ok)">✓ ok</span>
+            </div>
+            <div class="mock-tag">
+              <div class="mock-tag-dot" style="background: var(--ok)"></div>
+              <span class="mock-tag-name">og:description</span>
+              <span class="mock-tag-status" style="color: var(--ok)">✓ ok</span>
+            </div>
+            <div class="mock-tag">
+              <div class="mock-tag-dot" style="background: var(--warn)"></div>
+              <span class="mock-tag-name">og:image</span>
+              <span class="mock-tag-status" style="color: var(--warn)"
+                >! warn</span
+              >
+            </div>
+            <div class="mock-tag">
+              <div class="mock-tag-dot" style="background: var(--ok)"></div>
+              <span class="mock-tag-name">twitter:card</span>
+              <span class="mock-tag-status" style="color: var(--ok)">✓ ok</span>
+            </div>
+            <div class="mock-tag">
+              <div class="mock-tag-dot" style="background: var(--err)"></div>
+              <span class="mock-tag-name">canonical</span>
+              <span class="mock-tag-status" style="color: var(--err)"
+                >✗ missing</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+     FEATURES
+══════════════════════════════════════════════ -->
+    <section class="features-section">
+      <div class="section-header" style="padding: 40px 60px 40px">
+        <div>
+          <div class="section-label">What it does</div>
+          <h2 class="section-title">Everything your<br />meta tags need.</h2>
+        </div>
+        <a href="docs.html" class="btn btn-ghost">Full documentation →</a>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-col">
+          <div class="feature-number">01</div>
+          <h3 class="feature-title">Universal Auditor</h3>
+          <p class="feature-body">
+            Scans all <strong>15+ meta tag types</strong> in one pass — Open
+            Graph, Twitter Cards, JSON-LD structured data, canonical URLs,
+            robots directives, and viewport. Each tag is checked against
+            platform-specific rules, not just "is it present?". You'll know if
+            your <code>og:title</code> is 12 characters too long for Facebook
+            before Facebook tells you.
+          </p>
+        </div>
+        <div class="feature-col">
+          <div class="feature-number">02</div>
+          <h3 class="feature-title">Pixel-Perfect Previews</h3>
+          <p class="feature-body">
+            No lorem ipsum stand-ins. MetaPulse renders
+            <strong>platform-accurate simulations</strong> of Twitter's Summary
+            Card, Twitter's Large Image Card, Slack's link unfurl, WhatsApp's
+            message bubble, and Google's Search Result snippet — complete with
+            correct character truncation, actual image loading from the
+            <code>og:image</code> URL, and platform-specific font and layout
+            rules.
+          </p>
+        </div>
+        <div class="feature-col">
+          <div class="feature-number">03</div>
+          <h3 class="feature-title">Instant Code Fixes</h3>
+          <p class="feature-body">
+            Found a problem? Every audit flag comes with a
+            <strong>Fix button</strong> that opens a ready-to-use HTML snippet —
+            properly formatted, correctly attributed, with inline comments
+            explaining <em>why</em> each tag matters. The full code generator
+            also produces a complete, optimised <code>&lt;head&gt;</code> block
+            you can copy in one click.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+     PLATFORMS
+══════════════════════════════════════════════ -->
+    <section class="platforms-section">
+      <div class="platforms-left">
+        <div class="section-label">Platform coverage</div>
+        <h2 class="section-title">Every place<br />your links land.</h2>
+        <p
+          style="
+            color: var(--ink-muted);
+            font-size: 0.9rem;
+            line-height: 1.75;
+            margin-top: 16px;
+            max-width: 340px;
+          "
+        >
+          A link shared on Slack looks completely different from the same link
+          on Twitter. MetaPulse knows the quirks of each platform — where they
+          truncate, what they require, and what they silently ignore.
+        </p>
+        <a href="app.html" class="btn btn-primary" style="margin-top: 28px"
+          >Try the auditor →</a
+        >
+      </div>
+      <div class="platforms-right">
+        <div class="platform-card">
+          <div class="platform-icon">𝕏</div>
+          <div class="platform-name">Twitter / X</div>
+          <div class="platform-desc">
+            Summary Card &amp; Large Image Card variants. Correct 70-char title
+            truncation and 2:1 image ratio guidance.
+          </div>
+        </div>
+        <div class="platform-card">
+          <div class="platform-icon" style="font-size: 1.4rem">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 127 127"
+              fill="currentColor"
+            >
+              <path
+                d="M27.2 80c0 7.3-5.9 13.2-13.2 13.2C6.7 93.2.8 87.3.8 80c0-7.3 5.9-13.2 13.2-13.2h13.2V80zm6.6 0c0-7.3 5.9-13.2 13.2-13.2 7.3 0 13.2 5.9 13.2 13.2v33c0 7.3-5.9 13.2-13.2 13.2-7.3 0-13.2-5.9-13.2-13.2V80z"
+                fill="#E01E5A"
+              />
+              <path
+                d="M47 27c-7.3 0-13.2-5.9-13.2-13.2C33.8 6.5 39.7.6 47 .6c7.3 0 13.2 5.9 13.2 13.2V27H47zm0 6.7c7.3 0 13.2 5.9 13.2 13.2 0 7.3-5.9 13.2-13.2 13.2H13.9C6.6 60.1.7 54.2.7 46.9c0-7.3 5.9-13.2 13.2-13.2H47z"
+                fill="#36C5F0"
+              />
+              <path
+                d="M99.9 46.9c0-7.3 5.9-13.2 13.2-13.2 7.3 0 13.2 5.9 13.2 13.2 0 7.3-5.9 13.2-13.2 13.2H99.9V46.9zm-6.6 0c0 7.3-5.9 13.2-13.2 13.2-7.3 0-13.2-5.9-13.2-13.2V13.8C66.9 6.5 72.8.6 80.1.6c7.3 0 13.2 5.9 13.2 13.2v33.1z"
+                fill="#2EB67D"
+              />
+              <path
+                d="M80.1 99.8c7.3 0 13.2 5.9 13.2 13.2 0 7.3-5.9 13.2-13.2 13.2-7.3 0-13.2-5.9-13.2-13.2V99.8h13.2zm0-6.6c-7.3 0-13.2-5.9-13.2-13.2 0-7.3 5.9-13.2 13.2-13.2h33.1c7.3 0 13.2 5.9 13.2 13.2 0 7.3-5.9 13.2-13.2 13.2H80.1z"
+                fill="#ECB22E"
+              />
+            </svg>
+          </div>
+          <div class="platform-name">Slack</div>
+          <div class="platform-desc">
+            Full link unfurl simulation with title, description, site name, and
+            thumbnail — exactly how Slack renders it in a channel.
+          </div>
+        </div>
+        <div class="platform-card">
+          <div class="platform-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#25D366">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+              />
+            </svg>
+          </div>
+          <div class="platform-name">WhatsApp</div>
+          <div class="platform-desc">
+            Renders the WhatsApp dark-bubble link preview, which is stricter
+            about requiring og:image than most platforms.
+          </div>
+        </div>
+        <div class="platform-card">
+          <div class="platform-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+              <path
+                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                fill="#4285F4"
+              />
+              <path
+                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                fill="#34A853"
+              />
+              <path
+                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                fill="#FBBC05"
+              />
+              <path
+                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                fill="#EA4335"
+              />
+            </svg>
+          </div>
+          <div class="platform-name">Google Search</div>
+          <div class="platform-desc">
+            Desktop and mobile SERP snippet preview with precise character
+            truncation based on current Google guidelines.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+     HOW IT WORKS (brief)
+══════════════════════════════════════════════ -->
+    <section style="border-bottom: 2px solid var(--ink)">
+      <div
+        style="
+          padding: 60px 60px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 60px;
+          align-items: center;
+        "
+      >
+        <div>
+          <div class="section-label">How it works</div>
+          <h2
+            style="
+              font-family: var(--font-display);
+              font-size: 2.5rem;
+              letter-spacing: 0.02em;
+              line-height: 1;
+              margin-bottom: 20px;
+            "
+          >
+            Paste HTML.<br />Get answers.
+          </h2>
+          <p
+            style="
+              color: var(--ink-muted);
+              font-size: 0.9rem;
+              line-height: 1.8;
+              margin-bottom: 16px;
+            "
+          >
+            MetaPulse works entirely in your browser. Paste your page's HTML
+            source (or the entire
+            <code
+              style="
+                font-family: var(--font-mono);
+                font-size: 0.85em;
+                background: var(--paper-warm);
+                padding: 1px 5px;
+                border-radius: 3px;
+              "
+              >&lt;head&gt;</code
+            >
+            section) and the parser extracts every meta tag in milliseconds.
+            Nothing leaves your machine.
+          </p>
+          <p
+            style="color: var(--ink-muted); font-size: 0.9rem; line-height: 1.8"
+          >
+            You can also enter a URL and MetaPulse will attempt to fetch it. If
+            CORS gets in the way (it usually does), the tool will tell you
+            politely and guide you to paste the HTML instead. No drama.
+          </p>
+          <a href="docs.html" class="btn btn-ghost" style="margin-top: 24px"
+            >Full docs →</a
+          >
+        </div>
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            border: 2px solid var(--ink);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+          "
+        >
+          <div
+            style="
+              background: var(--ink);
+              padding: 12px 16px;
+              font-family: var(--font-mono);
+              font-size: 0.68rem;
+              color: var(--accent);
+              letter-spacing: 0.08em;
+            "
+          >
+            STEP BY STEP
+          </div>
+          <div style="display: flex; flex-direction: column">
+            <div
+              style="
+                padding: 16px 20px;
+                border-bottom: 1px solid var(--rule);
+                display: flex;
+                gap: 14px;
+                align-items: flex-start;
+              "
+            >
+              <span
+                style="
+                  font-family: var(--font-display);
+                  font-size: 1.5rem;
+                  color: var(--rule);
+                  flex-shrink: 0;
+                  line-height: 1;
+                "
+                >01</span
+              >
+              <div>
+                <div
+                  style="
+                    font-weight: 600;
+                    font-size: 0.88rem;
+                    margin-bottom: 3px;
+                  "
+                >
+                  Paste HTML or enter URL
+                </div>
+                <div style="font-size: 0.78rem; color: var(--ink-muted)">
+                  View Source on any page (Cmd+U), paste the HTML, hit audit.
+                </div>
+              </div>
+            </div>
+            <div
+              style="
+                padding: 16px 20px;
+                border-bottom: 1px solid var(--rule);
+                display: flex;
+                gap: 14px;
+                align-items: flex-start;
+              "
+            >
+              <span
+                style="
+                  font-family: var(--font-display);
+                  font-size: 1.5rem;
+                  color: var(--rule);
+                  flex-shrink: 0;
+                  line-height: 1;
+                "
+                >02</span
+              >
+              <div>
+                <div
+                  style="
+                    font-weight: 600;
+                    font-size: 0.88rem;
+                    margin-bottom: 3px;
+                  "
+                >
+                  Review the audit
+                </div>
+                <div style="font-size: 0.78rem; color: var(--ink-muted)">
+                  Every tag is rated OK, warn, or error. Missing required tags
+                  glow red.
+                </div>
+              </div>
+            </div>
+            <div
+              style="
+                padding: 16px 20px;
+                border-bottom: 1px solid var(--rule);
+                display: flex;
+                gap: 14px;
+                align-items: flex-start;
+              "
+            >
+              <span
+                style="
+                  font-family: var(--font-display);
+                  font-size: 1.5rem;
+                  color: var(--rule);
+                  flex-shrink: 0;
+                  line-height: 1;
+                "
+                >03</span
+              >
+              <div>
+                <div
+                  style="
+                    font-weight: 600;
+                    font-size: 0.88rem;
+                    margin-bottom: 3px;
+                  "
+                >
+                  Simulate your previews
+                </div>
+                <div style="font-size: 0.78rem; color: var(--ink-muted)">
+                  Switch between Twitter, Slack, WhatsApp, and Google to see
+                  exactly what people see.
+                </div>
+              </div>
+            </div>
+            <div
+              style="
+                padding: 16px 20px;
+                display: flex;
+                gap: 14px;
+                align-items: flex-start;
+              "
+            >
+              <span
+                style="
+                  font-family: var(--font-display);
+                  font-size: 1.5rem;
+                  color: var(--rule);
+                  flex-shrink: 0;
+                  line-height: 1;
+                "
+                >04</span
+              >
+              <div>
+                <div
+                  style="
+                    font-weight: 600;
+                    font-size: 0.88rem;
+                    margin-bottom: 3px;
+                  "
+                >
+                  Copy the fix
+                </div>
+                <div style="font-size: 0.78rem; color: var(--ink-muted)">
+                  Hit "Fix ↗" on any flagged tag. Copy the snippet. Done.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+     CTA BANNER
+══════════════════════════════════════════════ -->
+    <div class="cta-banner">
+      <h2 class="cta-headline">
+        Your links deserve<br />
+        to look <span class="hl">this good.</span>
+      </h2>
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          align-items: flex-start;
+        "
+      >
+        <a href="app.html" class="btn btn-accent btn-lg"
+          >Start Auditing — It's Free →</a
+        >
+        <span
+          style="
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: rgba(245, 242, 235, 0.4);
+            letter-spacing: 0.04em;
+          "
+          >No signup. No extension. Works in every modern browser.</span
+        >
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════ -->
+    <footer class="site-footer">
+      <span
+        >MetaPulse · Open Source ·
+        <a
+          href="https://js.org"
+          style="color: var(--ink-muted); text-decoration: none"
+          >Part of the JS.ORG ecosystem</a
+        ></span
+      >
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="app.html">Auditor</a>
+        <a href="docs.html">Docs</a>
+        <a href="https://github.com">GitHub</a>
+      </div>
+    </footer>
+  </body>
+</html>

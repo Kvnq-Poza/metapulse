@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auditor — MetaPulse</title>
+    <link rel="stylesheet" href="../css/tokens.css" />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/app.css" />
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <div class="app-layout">
+      <!-- SIDEBAR (Now acts as Top Section in Sidepanel) -->
+      <aside class="app-sidebar">
+        <!-- Score section -->
+        <div class="sidebar-section">
+          <div class="sidebar-label">Health Score</div>
+          <div class="score-section">
+            <div class="gauge-wrap">
+              <svg
+                class="gauge-svg"
+                id="gaugeSvg"
+                viewBox="10 10 180 100"
+                overflow="visible"
+              >
+                <path
+                  id="gaugeTrack"
+                  d="M 20,100 A 80,80 0 1,1 180,100"
+                  fill="none"
+                  stroke="var(--rule)"
+                  stroke-width="10"
+                  stroke-linecap="round"
+                />
+                <path
+                  id="gaugeFill"
+                  d="M 20,100 A 80,80 0 1,1 180,100"
+                  fill="none"
+                  stroke-width="10"
+                  stroke-linecap="round"
+                  style="
+                    stroke-dasharray: 251;
+                    stroke-dashoffset: 251;
+                    transition:
+                      stroke-dashoffset 1.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+                      stroke 0.4s;
+                    stroke: var(--ok);
+                  "
+                />
+              </svg>
+              <div class="gauge-center">
+                <span class="gauge-score" id="gaugeScore">--</span>
+                <span class="gauge-label">out of 100</span>
+              </div>
+            </div>
+            <div class="gauge-ticks">
+              <span class="gauge-tick-lbl">0</span>
+              <span class="gauge-tick-lbl">100</span>
+            </div>
+            <div class="score-grade" id="scoreGrade">—</div>
+            <div class="score-message" id="scoreMsg">
+              Waiting for page data...
+            </div>
+            <div class="score-counts">
+              <div class="score-count-pill ok-pill">
+                <span class="score-count-num" id="countOk">—</span>
+                <span class="score-count-lbl">OK</span>
+              </div>
+              <div class="score-count-pill warn-pill">
+                <span class="score-count-num" id="countWarn">—</span>
+                <span class="score-count-lbl">Warn</span>
+              </div>
+              <div class="score-count-pill err-pill">
+                <span class="score-count-num" id="countErr">—</span>
+                <span class="score-count-lbl">Error</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tag audit list -->
+        <div id="tagListWrap">
+          <div
+            class="sidebar-label"
+            style="
+              padding: 10px 20px 6px;
+              background: var(--paper-warm);
+              border-bottom: 1px solid var(--rule);
+              border-top: 1px solid var(--rule);
+            "
+          >
+            Tag Audit
+          </div>
+          <div id="tagList"></div>
+        </div>
+
+        <!-- Asset checks -->
+        <div class="sidebar-section">
+          <div class="sidebar-label">Asset Checks</div>
+          <div class="asset-grid" id="assetGrid">
+            <div
+              style="
+                font-family: var(--font-mono);
+                font-size: 0.7rem;
+                color: var(--ink-faint);
+                font-style: italic;
+              "
+            >
+              Waiting for page data...
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAIN / PREVIEWS -->
+      <main class="app-main">
+        <div class="preview-tab-bar">
+          <button
+            class="preview-tab active"
+            data-tab="twitter"
+            id="tab-twitter"
+          >
+            Twitter / X
+          </button>
+          <button class="preview-tab" data-tab="slack" id="tab-slack">
+            Slack
+          </button>
+          <button class="preview-tab" data-tab="whatsapp" id="tab-whatsapp">
+            WhatsApp
+          </button>
+          <button class="preview-tab" data-tab="google" id="tab-google">
+            Google
+          </button>
+          <button class="preview-tab" data-tab="code" id="tab-code">
+            Code
+          </button>
+        </div>
+
+        <div class="preview-pane active" data-pane="twitter" id="pane-twitter">
+          <div id="previewTwitter"></div>
+        </div>
+        <div class="preview-pane" data-pane="slack" id="pane-slack">
+          <div id="previewSlack"></div>
+        </div>
+        <div class="preview-pane" data-pane="whatsapp" id="pane-whatsapp">
+          <div id="previewWhatsapp"></div>
+        </div>
+        <div class="preview-pane" data-pane="google" id="pane-google">
+          <div id="previewGoogle"></div>
+        </div>
+        <div class="preview-pane" data-pane="code" id="pane-code">
+          <div id="codeSection">
+            <div class="code-wrap">
+              <pre
+                class="code-block"
+                id="codeOutput"
+                style="min-height: 200px"
+              ></pre>
+              <button class="copy-btn" id="copyFullBtn">Copy All</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- FIX MODAL -->
+    <div class="modal-backdrop" id="fixModal">
+      <div class="modal">
+        <div class="modal-header">
+          <div class="modal-title" id="modalTitle">Fix: tag</div>
+          <button class="modal-close" id="modalCloseBtn">✕</button>
+        </div>
+        <p class="modal-desc" id="modalDesc"></p>
+        <div class="code-wrap">
+          <pre
+            class="code-block"
+            id="modalCode"
+            style="font-size: 0.8rem; line-height: 1.8"
+          ></pre>
+          <button class="copy-btn" id="modalCopyBtn">Copy</button>
+        </div>
+        <div
+          style="
+            margin-top: 16px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+          "
+        >
+          <button class="btn btn-ghost btn-sm" id="modalCloseBtn2">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast">
+      <span class="toast-icon">✓</span>
+      <span class="toast-msg">Done</span>
+    </div>
+
+    <script type="module" src="sidepanel.js"></script>
+  </body>
+</html>

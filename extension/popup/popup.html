@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>MetaPulse Popup</title>
+    <link rel="stylesheet" href="../css/tokens.css" />
+    <style>
+      body {
+        width: 320px;
+        padding: 16px;
+        font-family: var(--font-body);
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+      }
+      h2 {
+        font-family: var(--font-display);
+        font-size: 1.2rem;
+        margin: 0 0 12px;
+      }
+      .score-banner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px;
+        border-radius: 8px;
+        background: var(--paper-warm);
+        margin-bottom: 16px;
+        border: 1px solid var(--rule);
+      }
+      .score-circle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--paper);
+        background: var(--rule);
+      }
+      .btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        border-radius: 4px;
+        border: none;
+        background: var(--accent);
+        color: white;
+        cursor: pointer;
+        font-size: 0.95rem;
+      }
+      .btn:hover {
+        opacity: 0.9;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>MetaPulse Status</h2>
+    <div class="score-banner" id="scoreBanner">
+      <div>
+        <div
+          style="
+            font-size: 0.85rem;
+            color: var(--ink-muted);
+            margin-bottom: 4px;
+          "
+        >
+          Health Score
+        </div>
+        <div id="scoreGrade" style="font-weight: 600">--</div>
+      </div>
+      <div class="score-circle" id="scoreBadge">--</div>
+    </div>
+    <button id="openAuditBtn" class="btn">Open Full Audit →</button>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
