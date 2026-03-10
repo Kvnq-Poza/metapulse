@@ -22,7 +22,6 @@ const state = {
   manifest: null,
   results: [],
   score: 0,
-  activeInput: "html", // 'url' | 'html'
   activePreview: "twitter", // 'twitter' | 'slack' | 'whatsapp' | 'google' | 'code'
   googleDevice: "desktop",
 };
@@ -40,30 +39,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if ((e.metaKey || e.ctrlKey) && e.key === "Enter") runAudit();
   });
 
-  // Pre-fill URL from query string e.g. app.html?url=https://...
-  const params = new URLSearchParams(location.search);
-  const qUrl = params.get("url");
-  if (qUrl) {
-    switchInputTab("url");
-    $("urlInput").value = qUrl;
-    runAudit();
-  }
-
   // Demo button
   const demoBtn = $("demoBtn");
   if (demoBtn) demoBtn.addEventListener("click", loadDemo);
 });
 
 // ── Tab switchers ──────────────────────────────────────────────────────
-
-window.switchInputTab = function (tab) {
-  state.activeInput = tab;
-  $$(".input-tab").forEach((b) =>
-    b.classList.toggle("active", b.dataset.tab === tab),
-  );
-  $("urlWrap").style.display = tab === "url" ? "block" : "none";
-  $("htmlWrap").style.display = tab === "html" ? "block" : "none";
-};
 
 window.switchPreviewTab = function (tab) {
   state.activePreview = tab;
@@ -84,42 +65,10 @@ window.runAudit = async function () {
   btn.disabled = true;
 
   try {
-    let html = "";
-
-    if (state.activeInput === "html") {
-      html = $("htmlInput").value.trim();
-      if (!html) {
-        showToast("Paste some HTML first", "warn");
-        return;
-      }
-    } else {
-      const url = $("urlInput").value.trim();
-      if (!url) {
-        showToast("Enter a URL first", "warn");
-        return;
-      }
-
-      try {
-        const proxy = `https://corsproxy.io/?${encodeURIComponent(url)}`;
-        const res = await fetch(proxy, { signal: AbortSignal.timeout(10000) });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        html = await res.text();
-      } catch (err) {
-        showToast("CORS blocked — paste HTML snippet instead", "warn");
-        switchInputTab("html");
-        $("htmlInput").placeholder = [
-          "Direct fetch was blocked by CORS.",
-          "",
-          "To inspect this page:",
-          "1. Open it in your browser",
-          "2. Right-click → View Page Source",
-          "3. Select All → Copy",
-          "4. Paste here",
-          "",
-          "Or paste just the <head> section.",
-        ].join("\n");
-        return;
-      }
+    const html = $("htmlInput").value.trim();
+    if (!html) {
+      showToast("Paste some HTML first", "warn");
+      return;
     }
 
     // Parse & audit
@@ -351,7 +300,6 @@ function loadDemo() {
 <body></body>
 </html>`;
 
-  switchInputTab("html");
   $("htmlInput").value = demo;
   runAudit();
 }

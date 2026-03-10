@@ -23,6 +23,7 @@ export const Parser = {
       twitter: {},
       jsonld: [],
       raw: [],
+      favicon: "",
     };
 
     // ── <title> ──────────────────────────────────
@@ -52,10 +53,23 @@ export const Parser = {
       if (key.startsWith("twitter:")) manifest.twitter[key.slice(8)] = content; // store without prefix
     });
 
-    // ── <link rel="canonical"> ───────────────────
     const canonEl = doc.querySelector('link[rel="canonical"]');
     if (canonEl)
       manifest.canonical = (canonEl.getAttribute("href") || "").trim();
+
+    // ── Favicon ──────────────────────────────────
+    const faviconSelectors = [
+      'link[rel="icon"]',
+      'link[rel="shortcut icon"]',
+      'link[rel="apple-touch-icon"]',
+    ];
+    for (const sel of faviconSelectors) {
+      const el = doc.querySelector(sel);
+      if (el) {
+        manifest.favicon = (el.getAttribute("href") || "").trim();
+        break;
+      }
+    }
 
     // ── JSON-LD ──────────────────────────────────
     doc.querySelectorAll('script[type="application/ld+json"]').forEach((s) => {
@@ -84,9 +98,9 @@ export const Parser = {
       case "image":
         return manifest.twitter.image || manifest.og.image || "";
       case "url":
-        return manifest.og.url || manifest.canonical || "";
+        return manifest.og.url || manifest.canonical || manifest.url || "";
       case "domain": {
-        const url = manifest.og.url || manifest.canonical || "";
+        const url = manifest.og.url || manifest.canonical || manifest.url || "";
         try {
           return new URL(url).hostname;
         } catch {

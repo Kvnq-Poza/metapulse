@@ -181,7 +181,7 @@ export const Previews = {
     containerEl.innerHTML = `
       <div class="slack-sim">
         <div class="slack-row">
-          <div class="slack-avi">U</div>
+          <div class="slack-avi">${manifest.favicon ? `<img src="${esc(manifest.favicon)}" alt="icon" style="width:100%;height:100%;object-fit:cover;border-radius:8px" onerror="this.outerHTML='U'">` : "U"}</div>
           <div class="slack-msg-body">
             <span class="slack-name">you</span>
             <span class="slack-ts">Today at 12:00 PM</span>
@@ -260,7 +260,7 @@ export const Previews = {
       </div>
       <div class="google-sim ${device === "mobile" ? "google-mobile" : ""}">
         <div class="google-crumb">
-          <div class="google-fav">🌐</div>
+          <div class="google-fav">${manifest.favicon ? `<img src="${esc(manifest.favicon)}" alt="icon" style="width:100%;height:100%;object-fit:cover;border-radius:50%" onerror="this.outerHTML='🌐'">` : "🌐"}</div>
           <span class="google-site-name">${esc(domain)}</span>
           ${path ? `<span class="google-path"> › ${esc(path)}</span>` : ""}
         </div>

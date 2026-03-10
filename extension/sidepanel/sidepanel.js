@@ -201,6 +201,8 @@ $("copyFullBtn").addEventListener("click", () => {
 
 // ── Messaging with Content Script ──────────────────────────────────────
 
+import { Parser } from "../js/parser.js";
+
 chrome.runtime.onMessage.addListener((msg) => {
   if (msg.type === "LIVE_AUDIT_RESULT" && msg.manifest) {
     state.manifest = msg.manifest;
@@ -210,13 +212,98 @@ chrome.runtime.onMessage.addListener((msg) => {
   }
 });
 
-// Request initial audit when sidepanel opens
+// ── Helper: request audit from a specific tab ──────────────────────────
+
+function requestAuditFromTab(tabId) {
+  // Try pinging the content script first
+  chrome.tabs.sendMessage(tabId, { type: "PING_AUDIT" }).catch(() => {
+    // Content script not loaded — scrape HTML directly and audit in sidepanel
+    chrome.scripting
+      .executeScript({
+        target: { tabId: tabId },
+        func: () => document.documentElement.outerHTML,
+      })
+      .then(([{ result: html }]) => {
+        if (html) {
+          const manifest = Parser.parse(html);
+          // Get the tab URL for fallback
+          chrome.tabs.get(tabId, (tab) => {
+            manifest.url = manifest.url || (tab && tab.url) || "";
+            state.manifest = manifest;
+            state.results = Validators.audit(state.manifest);
+            state.score = Validators.score(state.results);
+            renderAll();
+          });
+        }
+      })
+      .catch(() => {
+        $("scoreMsg").textContent = "Cannot audit this page. Try another tab.";
+      });
+  });
+}
+
+// ── Helper: reset the UI to a waiting state ────────────────────────────
+
+function resetUI() {
+  state.manifest = null;
+  state.results = [];
+  state.score = 0;
+
+  $("gaugeScore").textContent = "--";
+  $("gaugeScore").style.color = "";
+  $("scoreGrade").textContent = "—";
+  $("scoreGrade").style.color = "";
+  $("scoreMsg").textContent = "Loading page data...";
+  $("countOk").textContent = "—";
+  $("countWarn").textContent = "—";
+  $("countErr").textContent = "—";
+  $("tagList").innerHTML = "";
+  $("assetGrid").innerHTML = "";
+
+  // Reset gauge fill
+  const fillEl = $("gaugeFill");
+  if (fillEl) {
+    fillEl.style.strokeDashoffset = "251";
+    fillEl.style.stroke = "var(--ok)";
+  }
+
+  // Clear preview panes
+  [
+    "previewTwitter",
+    "previewSlack",
+    "previewWhatsapp",
+    "previewGoogle",
+    "codeOutput",
+  ].forEach((id) => {
+    const el = $(id);
+    if (el) el.innerHTML = "";
+  });
+}
+
+// ── Request initial audit when sidepanel opens ─────────────────────────
+
 chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
   if (tabs.length > 0) {
-    chrome.tabs.sendMessage(tabs[0].id, { type: "PING_AUDIT" }).catch(() => {
-      // If content script not yet loaded, it might be an internal page
-      $("scoreMsg").textContent =
-        "Cannot audit this page. Reload or try another tab.";
+    requestAuditFromTab(tabs[0].id);
+  }
+});
+
+// ── Re-audit when user switches tabs ───────────────────────────────────
+
+chrome.tabs.onActivated.addListener((activeInfo) => {
+  resetUI();
+  requestAuditFromTab(activeInfo.tabId);
+});
+
+// ── Re-audit when current tab finishes loading ─────────────────────────
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+  if (changeInfo.status === "complete") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs.length > 0 && tabs[0].id === tabId) {
+        resetUI();
+        requestAuditFromTab(tabId);
+      }
     });
   }
 });
