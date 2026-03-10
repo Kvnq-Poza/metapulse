@@ -8,9 +8,10 @@ export const Parser = {
   /**
    * Parse an HTML string and return a manifest object.
    * @param {string} html
+   * @param {string} baseUrl
    * @returns {Manifest}
    */
-  parse(html) {
+  parse(html, baseUrl = "") {
     const doc = new DOMParser().parseFromString(html, "text/html");
 
     const manifest = {
@@ -24,6 +25,7 @@ export const Parser = {
       jsonld: [],
       raw: [],
       favicon: "",
+      url: baseUrl, // Set initial URL
     };
 
     // ── <title> ──────────────────────────────────
@@ -63,12 +65,30 @@ export const Parser = {
       'link[rel="shortcut icon"]',
       'link[rel="apple-touch-icon"]',
     ];
+    let fav = "";
     for (const sel of faviconSelectors) {
       const el = doc.querySelector(sel);
       if (el) {
-        manifest.favicon = (el.getAttribute("href") || "").trim();
+        fav = (el.getAttribute("href") || "").trim();
         break;
       }
+    }
+
+    // Use current URL or canonical as base for resolution
+    const base = baseUrl || manifest.canonical || "";
+
+    if (!fav && base) {
+      fav = "/favicon.ico"; // Standard fallback
+    }
+
+    if (fav && base) {
+      try {
+        manifest.favicon = new URL(fav, base).href;
+      } catch (_) {
+        manifest.favicon = fav;
+      }
+    } else {
+      manifest.favicon = fav;
     }
 
     // ── JSON-LD ──────────────────────────────────
@@ -109,6 +129,11 @@ export const Parser = {
       }
       case "sitename":
         return manifest.og.site_name || Parser.resolve(manifest, "domain");
+      case "favicon": {
+        if (manifest.favicon) return manifest.favicon;
+        const domain = Parser.resolve(manifest, "domain");
+        return `https://www.google.com/s2/favicons?sz=64&domain=${domain}`;
+      }
       default:
         return "";
     }

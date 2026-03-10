@@ -135,6 +135,7 @@ export const Previews = {
     const desc = trunc(Parser.resolve(manifest, "description"), 125);
     const image = Parser.resolve(manifest, "image");
     const domain = Parser.resolve(manifest, "domain");
+    const favicon = Parser.resolve(manifest, "favicon");
 
     containerEl.innerHTML = `
       <div class="preview-label">Summary Card (small)</div>
@@ -147,7 +148,10 @@ export const Previews = {
           }
         </div>
         <div class="x-card-summary-body">
-          <div class="x-card-domain">${esc(domain)}</div>
+          <div class="x-card-meta">
+            ${favicon ? `<img src="${esc(favicon)}" class="x-card-fav" onerror="this.style.display='none'">` : ""}
+            <div class="x-card-domain">${esc(domain)}</div>
+          </div>
           <div class="x-card-title">${esc(title) || "No title found"}</div>
           <div class="x-card-desc">${esc(desc) || "No description found"}</div>
         </div>
@@ -163,7 +167,10 @@ export const Previews = {
           }
         </div>
         <div class="x-card-body">
-          <div class="x-card-domain">${esc(domain)}</div>
+          <div class="x-card-meta">
+            ${favicon ? `<img src="${esc(favicon)}" class="x-card-fav" onerror="this.style.display='none'">` : ""}
+            <div class="x-card-domain">${esc(domain)}</div>
+          </div>
           <div class="x-card-title">${esc(title) || "No title found"}</div>
           <div class="x-card-desc">${esc(desc) || "No description found"}</div>
         </div>
@@ -177,18 +184,22 @@ export const Previews = {
     const image = Parser.resolve(manifest, "image");
     const sitename = Parser.resolve(manifest, "sitename");
     const url = Parser.resolve(manifest, "url") || "https://yoursite.com";
+    const favicon = Parser.resolve(manifest, "favicon");
 
     containerEl.innerHTML = `
       <div class="slack-sim">
         <div class="slack-row">
-          <div class="slack-avi">${manifest.favicon ? `<img src="${esc(manifest.favicon)}" alt="icon" style="width:100%;height:100%;object-fit:cover;border-radius:8px" onerror="this.outerHTML='U'">` : "U"}</div>
+          <div class="slack-avi">${favicon ? `<img src="${esc(favicon)}" alt="icon" style="width:100%;height:100%;object-fit:cover;border-radius:8px" onerror="this.outerHTML='U'">` : "U"}</div>
           <div class="slack-msg-body">
             <span class="slack-name">you</span>
             <span class="slack-ts">Today at 12:00 PM</span>
             <div class="slack-text">${esc(url)}</div>
             <div class="slack-unfurl">
               <div class="slack-unfurl-text">
-                <div class="slack-unfurl-site">${esc(sitename)}</div>
+                <div class="slack-unfurl-site">
+                  ${favicon ? `<img src="${esc(favicon)}" class="slack-site-fav" onerror="this.style.display='none'">` : ""}
+                  ${esc(sitename)}
+                </div>
                 <div class="slack-unfurl-title">${esc(title) || "No title"}</div>
                 <div class="slack-unfurl-desc">${esc(desc) || "No description"}</div>
               </div>
@@ -212,6 +223,7 @@ export const Previews = {
     const image = Parser.resolve(manifest, "image");
     const domain = Parser.resolve(manifest, "domain");
     const url = Parser.resolve(manifest, "url") || "https://yoursite.com";
+    const favicon = Parser.resolve(manifest, "favicon");
 
     containerEl.innerHTML = `
       <div class="wa-sim">
@@ -224,7 +236,10 @@ export const Previews = {
             }
           </div>
           <div class="wa-link-meta">
-            <div class="wa-link-title">${esc(title) || "No title"}</div>
+            <div class="wa-link-title">
+              ${favicon ? `<img src="${esc(favicon)}" class="wa-site-fav" onerror="this.style.display='none'">` : ""}
+              ${esc(title) || "No title"}
+            </div>
             <div class="wa-link-desc">${esc(desc) || "No description"}</div>
             <div class="wa-link-domain">${esc(domain)}</div>
           </div>
@@ -246,6 +261,7 @@ export const Previews = {
     );
     const url = Parser.resolve(manifest, "url") || "";
     const domain = Parser.resolve(manifest, "domain");
+    const favicon = Parser.resolve(manifest, "favicon");
     const path = url ? url.replace(/^https?:\/\/[^/]+/, "") || "/" : "";
     const today = new Date().toLocaleDateString("en-GB", {
       day: "numeric",
@@ -260,7 +276,7 @@ export const Previews = {
       </div>
       <div class="google-sim ${device === "mobile" ? "google-mobile" : ""}">
         <div class="google-crumb">
-          <div class="google-fav">${manifest.favicon ? `<img src="${esc(manifest.favicon)}" alt="icon" style="width:100%;height:100%;object-fit:cover;border-radius:50%" onerror="this.outerHTML='🌐'">` : "🌐"}</div>
+          <div class="google-fav">${favicon ? `<img src="${esc(favicon)}" alt="icon" style="width:100%;height:100%;object-fit:cover;border-radius:50%" onerror="this.outerHTML='🌐'">` : "🌐"}</div>
           <span class="google-site-name">${esc(domain)}</span>
           ${path ? `<span class="google-path"> › ${esc(path)}</span>` : ""}
         </div>

@@ -10,7 +10,7 @@ async function runAudit() {
 
     // Scrape the DOM
     const html = document.documentElement.outerHTML;
-    const manifest = Parser.parse(html);
+    const manifest = Parser.parse(html, window.location.href);
 
     // Add current URL dynamically since the parser might not catch the live location if missing canonical
     manifest.url = manifest.url || window.location.href;

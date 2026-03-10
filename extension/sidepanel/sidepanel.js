@@ -225,10 +225,11 @@ function requestAuditFromTab(tabId) {
       })
       .then(([{ result: html }]) => {
         if (html) {
-          const manifest = Parser.parse(html);
-          // Get the tab URL for fallback
+          // Get the tab URL for resolution
           chrome.tabs.get(tabId, (tab) => {
-            manifest.url = manifest.url || (tab && tab.url) || "";
+            const baseUrl = (tab && tab.url) || "";
+            const manifest = Parser.parse(html, baseUrl);
+            manifest.url = manifest.url || baseUrl;
             state.manifest = manifest;
             state.results = Validators.audit(state.manifest);
             state.score = Validators.score(state.results);
